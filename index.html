@@ -9,22 +9,23 @@
 <meta name="robots" content="noindex, nofollow">
 <style>
 :root{
-  color-scheme: light;
-  --ink:#14171c;
-  --ink-2:#454c57;
-  --ink-3:#6a7382;
-  --line:#d1d8e2;
-  --line-2:#e1e6ed;
-  /* page sits on grey, cards and accent sections are the white ones */
-  --bg:#e1e6ee;
-  --bg-2:#ffffff;
-  --steel:#151d2b;
-  --steel-2:#1f2b3d;
-  --accent:#1d4470;
-  --accent-dark:#15314f;
-  --accent-soft:#eaf0f7;
-  /* accent is too dark to read on the steel blocks - use this there instead */
+  color-scheme: dark;
+  --ink:#eef2f8;
+  --ink-2:#b0bccc;
+  --ink-3:#8290a4;
+  --line:#2b3648;
+  --line-2:#232d3d;
+  /* dark theme: page is the darkest layer, panels sit above it */
+  --bg:#0f151f;
+  --bg-2:#19222f;
+  --steel:#22303f;
+  --steel-2:#2a3a4c;
+  --accent:#5b9ad9;
+  --accent-dark:#7ab0e6;
+  --accent-soft:#1b2938;
   --accent-on-dark:#7ea6d8;
+  /* primary buttons: light accent block with dark label reads best on dark */
+  --btn-ink:#0d141e;
   --r:6px;
   --maxw:1240px;
   --pad:clamp(16px,4vw,40px);
@@ -43,14 +44,15 @@ p{margin:0}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
 
 /* ---------- demo notice ---------- */
-.demo-bar{background:#eef1f6;border-bottom:1px solid #d5dde7;color:#3f4c5e;font-size:13.5px;line-height:1.45;padding:9px 0}
+.demo-bar{background:#16202c;border-bottom:1px solid #2b3648;color:#95a3b6;font-size:13.5px;line-height:1.45;padding:9px 0}
 .demo-bar b{font-weight:600}
 
 /* ---------- header ---------- */
-.hdr{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
+.hdr{position:sticky;top:0;z-index:40;background:rgba(15,21,31,.92);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
 .hdr-in{display:flex;align-items:center;gap:28px;height:74px}
 .brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
-.brand img{width:46px;height:auto}
+/* logo art is black on a white plate - invert it and let screen drop the black back out */
+.brand img{width:46px;height:auto;filter:invert(1);mix-blend-mode:screen}
 .brand-t{font-weight:700;font-size:16.5px;letter-spacing:-.01em;line-height:1.15}
 .brand-t span{display:block;font-weight:400;font-size:11.5px;color:var(--ink-3);letter-spacing:.02em}
 .nav{display:flex;gap:26px;margin-left:auto;font-size:15.5px}
@@ -65,16 +67,16 @@ p{margin:0}
 .hdr.open .burger i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
 /* mobile sticky call bar */
-.mbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px var(--pad) calc(9px + env(safe-area-inset-bottom));gap:9px}
+.mbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(15,21,31,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:9px var(--pad) calc(9px + env(safe-area-inset-bottom));gap:9px}
 .mbar .btn{flex:1;padding:13px 12px;font-size:15.5px}
 
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 24px;border-radius:var(--r);font-size:16px;font-weight:600;text-decoration:none;white-space:nowrap;border:1px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,transform .1s;font-family:inherit}
 .btn svg{width:17px;height:17px;fill:currentColor;flex-shrink:0}
 .btn:active{transform:translateY(1px)}
-.btn-p{background:var(--accent);color:#fff}
+.btn-p{background:var(--accent);color:var(--btn-ink)}
 .btn-p:hover{background:var(--accent-dark)}
-.btn-s{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-s{background:var(--bg-2);color:var(--ink);border-color:#3a4a60}
 .btn-s:hover{border-color:var(--ink-3)}
 .btn-g{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
 .btn-g:hover{border-color:#fff;background:rgba(255,255,255,.08)}
@@ -105,7 +107,7 @@ p{margin:0}
 
 /* ---------- catalog ---------- */
 .cat{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px)}
-.card{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(21,29,43,.05);display:flex;flex-direction:column;text-decoration:none;transition:border-color .2s,box-shadow .2s}
+.card{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg-2);box-shadow:0 1px 2px rgba(0,0,0,.25);display:flex;flex-direction:column;text-decoration:none;transition:border-color .2s,box-shadow .2s}
 .card:hover{border-color:#c3cad4;box-shadow:0 6px 22px rgba(20,23,28,.07)}
 .card-img{background:var(--bg-2);overflow:hidden}
 .card-img img{width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .5s cubic-bezier(.16,1,.3,1)}
@@ -142,12 +144,12 @@ p{margin:0}
 
 /* ---------- size table ---------- */
 .tinted{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:#fff}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--bg-2)}
 table.sizes{width:100%;border-collapse:collapse;font-size:15.5px;min-width:520px}
-table.sizes th{text-align:left;font-weight:650;font-size:13.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);padding:14px 18px;background:#fff;border-bottom:1px solid var(--line)}
+table.sizes th{text-align:left;font-weight:650;font-size:13.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);padding:14px 18px;background:var(--bg-2);border-bottom:1px solid var(--line)}
 table.sizes td{padding:13px 18px;border-bottom:1px solid var(--line-2)}
 table.sizes tr:last-child td{border-bottom:0}
-table.sizes tbody tr:nth-child(even){background:#fafbfc}
+table.sizes tbody tr:nth-child(even){background:#1e2836}
 table.sizes td:first-child{font-weight:650;white-space:nowrap}
 table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tbl-note{margin-top:16px;font-size:15px;color:var(--ink-3)}
@@ -197,8 +199,9 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .logos-in{margin-top:clamp(38px,4.5vw,56px);padding-top:clamp(32px,4vw,46px);border-top:1px solid var(--line)}
 .logos h2{font-size:clamp(19px,2vw,22px);margin-bottom:26px;color:var(--ink-2)}
 .logo-row{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(26px,4vw,58px)}
-.logo-row img{height:clamp(30px,3.4vw,44px);width:auto;opacity:.74;filter:grayscale(1) contrast(1.15);transition:opacity .2s,filter .2s}
-.logo-row img:hover{opacity:1;filter:grayscale(0)}
+/* partner marks come on white plates - same invert+screen trick as the brand logo */
+.logo-row img{height:clamp(30px,3.4vw,44px);width:auto;opacity:.8;filter:grayscale(1) invert(1) contrast(1.1);mix-blend-mode:screen;transition:opacity .2s}
+.logo-row img:hover{opacity:1}
 
 /* ---------- contact ---------- */
 .ct{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,4.5vw,64px);align-items:start}
@@ -207,7 +210,8 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .form>p{margin-top:11px;color:var(--ink-2);font-size:16px}
 .fld{margin-top:18px;display:grid;gap:7px}
 .fld label{font-size:14.5px;font-weight:600}
-.fld input,.fld textarea{font-family:inherit;font-size:16px;padding:12px 14px;border:1px solid #ccd3dc;border-radius:var(--r);background:#fff;color:var(--ink);width:100%}
+.fld input,.fld textarea{font-family:inherit;font-size:16px;padding:12px 14px;border:1px solid #3a4a60;border-radius:var(--r);background:#131b26;color:var(--ink);width:100%}
+.fld input::placeholder,.fld textarea::placeholder{color:#7a8798}
 .fld input::placeholder,.fld textarea::placeholder{color:#8b94a2}
 .fld input:focus,.fld textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
 .fld textarea{min-height:88px;resize:vertical}
@@ -226,10 +230,10 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .req{margin-top:24px;padding-top:20px;border-top:1px solid var(--line-2);font-size:14px;color:var(--ink-3);line-height:1.7}
 
 /* ---------- footer ---------- */
-.ft{background:var(--steel);color:#9aa3af;padding:clamp(34px,4vw,50px) 0;font-size:14.5px}
+.ft{background:#0a1017;color:#8894a5;padding:clamp(34px,4vw,50px) 0;font-size:14.5px}
 .ft-in{display:flex;flex-wrap:wrap;gap:22px 40px;justify-content:space-between;align-items:flex-start}
 .ft-brand{display:flex;align-items:center;gap:11px;color:#fff}
-.ft-brand img{width:42px;opacity:.92}
+.ft-brand img{width:42px;filter:invert(1);mix-blend-mode:screen}
 .ft-brand b{font-size:16px}
 .ft-nav{display:flex;flex-wrap:wrap;gap:8px 26px}
 .ft-nav a{text-decoration:none;transition:color .18s}
@@ -255,7 +259,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   /* phone stays reachable: icon-only tap target, never hidden */
   .hdr-tel{margin-left:auto;order:2;width:44px;height:44px;justify-content:center;border:1px solid var(--line);border-radius:var(--r);gap:0}
   .hdr-tel .tel-txt{display:none}
-  .nav{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;gap:0;margin:0;padding:6px var(--pad) 14px;box-shadow:0 14px 28px rgba(20,23,28,.09);display:none}
+  .nav{position:absolute;top:100%;left:0;right:0;background:#131b26;border-bottom:1px solid var(--line);flex-direction:column;gap:0;margin:0;padding:6px var(--pad) 14px;box-shadow:0 14px 28px rgba(0,0,0,.4);display:none}
   .hdr.open .nav{display:flex}
   .nav a{padding:14px 0;border-top:1px solid var(--line-2);font-size:17px;color:var(--ink)}
   .nav a:first-child{border-top:0}
@@ -464,7 +468,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
       <div class="term-grp">
         <h3>Отгрузка и доставка</h3>
         <dl>
-          <div class="row"><dt>Самовывоз</dt><dd>Со склада на Комсомольской, 127/1. В день обращения по позициям в наличии.</dd></div>
+          <div class="row"><dt>Самовывоз</dt><dd>Со склада в Магнитогорске. В день обращения по позициям в наличии.</dd></div>
           <div class="row"><dt>Доставка</dt><dd>По Магнитогорску и Челябинской области. В соседние регионы транспортными компаниями.</dd></div>
           <div class="row"><dt>Объём</dt><dd>От одной пачки. Крупный опт отгружаем фурами.</dd></div>
         </dl>
