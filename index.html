@@ -97,7 +97,10 @@ p{margin:0}
 /* the profile feeds in from the top-right corner, past the phone number, the way it
    would come off the roll-forming line. slow, single pass, then it rests. */
 @media (prefers-reduced-motion:no-preference){
-  .hero-img img{animation:profileOut 2.4s cubic-bezier(.2,.75,.25,1) .25s both}
+  /* held off-frame until the block is actually on screen, otherwise on phones the
+     profile finishes travelling before the visitor has scrolled down to it */
+  .hero-img.armed img{transform:translate(96%,-62%)}
+  .hero-img.armed.go img{animation:profileOut 2.4s cubic-bezier(.2,.75,.25,1) both}
 }
 @keyframes profileOut{
   from{transform:translate(96%,-62%)}
@@ -326,11 +329,24 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   .nav a:first-child{border-top:0}
   .mbar{display:flex}
   body{padding-bottom:78px}
+  /* solid bars on phones: translucent ones let the text bleed through and read as floating */
+  .hdr{background:#0f151f;backdrop-filter:none}
+  .mbar{background:#0f151f;backdrop-filter:none;box-shadow:0 -8px 20px rgba(0,0,0,.35)}
+  /* round, outlined call button next to the burger */
+  .hdr-tel{width:46px;height:46px;border-radius:50%;border-color:#3a4a60;background:transparent}
+  .hdr-tel svg{width:21px;height:21px}
   .facts-in{grid-template-columns:1fr}
   .faq{grid-template-columns:1fr}
-  /* the radial map's labels get unreadable when scaled down - swap it for a plain list */
-  .geo-map{display:none}
-  .geo-list{display:grid}
+  /* keep the map on phones, but scale the labels up so they survive the shrink */
+  .geo-list{display:none}
+  .geo-map .lbl{font-size:30px}
+  .geo-map .hub-lbl{font-size:34px}
+  .geo-map .hub-sub{font-size:25px}
+  .geo-map .dot{r:9}
+  .geo-map .ray{stroke-width:2}
+  /* stacked term rows line up on the left instead of stepping by label width */
+  .term-grp .row{grid-template-columns:1fr;gap:4px}
+  .term-grp dt{white-space:normal}
   .fact{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-right:0;padding-top:22px;padding-bottom:22px}
   .fact:first-child{border-top:0;padding-top:26px}
   .ct-item a,.ct-item span{display:inline-block;padding:7px 0}
@@ -962,6 +978,29 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
       burger.setAttribute('aria-expanded', 'false');
     });
   });
+})();
+
+// run the hero animation when the image comes into view, not on page load
+(function(){
+  var box = document.querySelector('.hero-img');
+  if (!box) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  box.classList.add('armed');
+  var done = false;
+  var start = function(){ if (done) return; done = true; box.classList.add('go'); };
+
+  // if it is already on screen at load, go straight away
+  var r = box.getBoundingClientRect();
+  if (r.top < innerHeight * 0.9 && r.bottom > 0) { start(); return; }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { start(); io.disconnect(); } });
+    }, { threshold: 0.25 });
+    io.observe(box);
+  }
+  // safety net: never leave the profile parked off-frame
+  setTimeout(start, 4000);
 })();
 
 // clicking a product carries its name into the request form, so the visitor
