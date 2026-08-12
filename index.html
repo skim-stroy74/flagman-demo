@@ -342,10 +342,12 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   .hdr.open .nav{display:flex}
   .nav a{padding:14px 0;border-top:1px solid var(--line-2);font-size:17px;color:var(--ink)}
   .nav a:first-child{border-top:0}
-  /* call bar sits in the page flow at the end, not pinned over the content */
-  .mbar{display:flex;position:static;background:#0f151f;backdrop-filter:none;box-shadow:none;
-        border-top:1px solid var(--line);padding:14px var(--pad) calc(14px + env(safe-area-inset-bottom))}
-  body{padding-bottom:0}
+  /* call bar stays within reach at the bottom. own compositing layer + opaque fill:
+     that is what stops the judder iOS gives translucent fixed elements while scrolling */
+  .mbar{display:flex;position:fixed;background:#0f151f;backdrop-filter:none;
+        border-top:1px solid var(--line);box-shadow:0 -8px 20px rgba(0,0,0,.35);
+        transform:translateZ(0);will-change:transform;backface-visibility:hidden}
+  body{padding-bottom:82px}
   /* solid header: a translucent one lets the text bleed through and reads as floating */
   .hdr{background:#0f151f;backdrop-filter:none}
   /* round, outlined call button next to the burger */
