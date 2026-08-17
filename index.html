@@ -26,7 +26,7 @@
   "legalName": "ООО «ТД Флагман»",
   "url": "https://магкрепёж.рф/",
   "logo": "https://магкрепёж.рф/og-image.jpg",
-  "telephone": "+7 968 116-37-21",
+  "telephone": ["+7 968 116-37-21", "+7 3519 58-14-37"],
   "email": "kompleks-mgn@mail.ru",
   "taxID": "7456050032",
   "address": {
@@ -34,7 +34,7 @@
     "addressCountry": "RU",
     "addressRegion": "Челябинская область",
     "addressLocality": "Магнитогорск",
-    "streetAddress": "1-я Северо-Западная, 13"
+    "streetAddress": "Комсомольская, 127/1"
   },
   "areaServed": ["Магнитогорск", "Челябинск", "Екатеринбург", "Уфа", "Оренбург", "Пермь", "Тюмень", "Казань", "Самара", "Кунгур"]
 }
@@ -163,7 +163,7 @@ p{margin:0}
 
 /* ---------- facts strip ---------- */
 .facts{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
-.facts-in{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.facts-in{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
 .fact{padding:30px clamp(18px,2.6vw,34px);border-left:1px solid var(--line)}
 .fact:first-child{border-left:0;padding-left:0}
 .fact svg{width:24px;height:24px;fill:var(--accent);margin-bottom:12px}
@@ -292,23 +292,6 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .calc-note{margin-top:14px;font-size:13.5px;color:var(--ink-3);line-height:1.5}
 .calc-actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
 
-/* ---------- reviews ---------- */
-.rev-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:clamp(22px,3vw,32px)}
-.rev-score{display:flex;align-items:baseline;gap:9px}
-.rev-score b{font-size:34px;font-weight:700;letter-spacing:-.02em}
-.rev-score .stars{color:#e8b53e;font-size:17px;letter-spacing:2px}
-.rev-score span{font-size:15px;color:var(--ink-3)}
-.rev-scroll{display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;
-  scrollbar-width:thin;scrollbar-color:#3a4a60 transparent}
-.rev-scroll::-webkit-scrollbar{height:6px}
-.rev-scroll::-webkit-scrollbar-thumb{background:#3a4a60;border-radius:3px}
-.rev-card{scroll-snap-align:start;flex:0 0 300px;background:var(--bg-2);border:1px solid var(--line);
-  border-radius:var(--r);padding:20px}
-.rev-card .stars{color:#e8b53e;font-size:14px;letter-spacing:2px;margin-bottom:10px}
-.rev-card h4{font-size:15.5px;margin-bottom:3px}
-.rev-card .date{font-size:13px;color:var(--ink-3);margin-bottom:11px}
-.rev-card p{font-size:15px;color:var(--ink-2);line-height:1.55}
-.rev-more{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
 
 /* ---------- map ---------- */
 .map-wrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg-2)}
@@ -484,7 +467,6 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   .cat{grid-template-columns:1fr}
   .mat-list{columns:1}
   .calc-row{grid-template-columns:1fr}
-  .rev-card{flex-basis:270px}
   .pgrid{grid-template-columns:repeat(2,1fr);gap:12px}
   .pcard-b{padding:11px 12px 13px}
   .pcard-b h4{font-size:14.5px}
@@ -555,7 +537,6 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   <div class="wrap facts-in">
     <div class="fact"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M116,176a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h28A8,8,0,0,1,116,176Zm60-8H148a8,8,0,0,0,0,16h28a8,8,0,0,0,0-16Zm64,48a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16h8V88a8,8,0,0,1,12.8-6.4L96,120V88a8,8,0,0,1,12.8-6.4l38.74,29.05L159.1,29.74A16.08,16.08,0,0,1,174.94,16h18.12A16.08,16.08,0,0,1,208.9,29.74l15,105.13s.08.78.08,1.13v72h8A8,8,0,0,1,240,216Zm-77.86-94.4,8.53,6.4h36.11L193.06,32H174.94ZM48,208H208V144H168a8,8,0,0,1-4.8-1.6l-14.4-10.8,0,0L112,104v32a8,8,0,0,1-12.8,6.4L48,104Z"/></svg><b data-type="Своё производство">Своё производство</b><p data-type="Делаем сами, поэтому в цене нет наценки посредников.">Делаем сами, поэтому в цене нет наценки посредников.</p></div>
     <div class="fact"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"/></svg><b data-type="Склад в Магнитогорске">Склад в Магнитогорске</b><p data-type="Ходовые позиции есть в наличии, отгрузка в день обращения.">Ходовые позиции есть в наличии, отгрузка в день обращения.</p></div>
-    <div class="fact"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M255.42,117l-14-35A15.93,15.93,0,0,0,226.58,72H192V64a8,8,0,0,0-8-8H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H49a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,255.42,117ZM192,88h34.58l9.6,24H192ZM32,72H176v64H32ZM80,208a16,16,0,1,1,16-16A16,16,0,0,1,80,208Zm81-24H111a32,32,0,0,0-62,0H32V152H176v12.31A32.11,32.11,0,0,0,161,184Zm31,24a16,16,0,1,1,16-16A16,16,0,0,1,192,208Zm48-24H223a32.06,32.06,0,0,0-31-24V128h48Z"/></svg><b data-type="Опт и розница">Опт и розница</b><p data-type="Отгружаем и фуру, и одну пачку. Доставим на объект.">Отгружаем и фуру, и одну пачку. Доставим на объект.</p></div>
   </div>
 </section>
 
@@ -620,14 +601,6 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
           <div class="card-f"><span class="card-go">Подробнее<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></span></div>
         </div>
       </a>
-    </div>
-
-    <div class="offer rv">
-      <div class="offer-b">
-        <h3>Штрипс оцинкованный и порезка стали</h3>
-        <p>Поставляем оцинкованную сталь ММК и режем её в штрипс под ваши размеры. Ширина полосы и толщина по вашему заданию, от одной пачки до вагонной нормы.</p>
-        <a class="btn btn-p" href="#request" data-item="Штрипс оцинкованный, порезка под размер">Рассчитать под свои размеры<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></a>
-      </div>
     </div>
 
     <div class="also">
@@ -752,7 +725,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
     <div>
       <h2>Собственное производство в городе Магнитогорск</h2>
       <ul class="prod-list">
-        <li><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span>Только качественный цинкованный прокат</span></li>
+        <li><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span>Только качественный прокат</span></li>
         <li><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span>Собственное производство</span></li>
         <li><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span>Профиль по ГОСТу</span></li>
         <li><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span>Профиль нестандартной длины под заказ</span></li>
@@ -1035,70 +1008,6 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   </div>
 </section>
 
-<section class="sec" id="reviews">
-  <div class="wrap">
-    <div class="sec-hd"><h2>Что говорят покупатели</h2></div>
-
-    <div class="rev-head">
-      <div class="rev-score">
-        <b>4,3</b>
-        <span class="stars">★★★★★</span>
-        <span>39 оценок на Яндекс.Картах</span>
-      </div>
-    </div>
-
-    <div class="rev-scroll">
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Булат Дюсембаев</h4>
-        <div class="date">8 апреля</div>
-        <p>Очень большой выбор материалов и смесей для штукатурных работ по конкурентной цене! Буду рекомендовать коллегам и знакомым!</p>
-      </div>
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Рустам Р.</h4>
-        <div class="date">8 апреля 2024</div>
-        <p>Хороший магазин метизов и профиля, широкий выбор, качественное обслуживание. Продавцы знают ассортимент и быстро подскажут в выборе. Рекомендую.</p>
-      </div>
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Azamat Rakhimov</h4>
-        <div class="date">6 июля</div>
-        <p>Покупал стройматериалы для дома. Своё дело знают! Привезли как и договаривались.</p>
-      </div>
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Александр Пластинин</h4>
-        <div class="date">22 июля</div>
-        <p>Всем рекомендую данный магазин, всегда всё в наличии.</p>
-      </div>
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Alex Dorn</h4>
-        <div class="date">22 августа 2020</div>
-        <p>Хорошее качество ОСП и фанеры, честные цены.</p>
-      </div>
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Сергей</h4>
-        <div class="date">10 января 2024</div>
-        <p>Самые дешёвые стройматериалы в городе.</p>
-      </div>
-      <div class="rev-card">
-        <div class="stars">★★★★★</div>
-        <h4>Евгений Ф.</h4>
-        <div class="date">4 декабря 2023</div>
-        <p>Самая лучшая компания!</p>
-      </div>
-    </div>
-
-    <div class="rev-more">
-      <a class="btn btn-s" href="https://yandex.ru/maps/org/flagman/70650983617/reviews/" target="_blank" rel="noopener">Отзывы о складе стройматериалов</a>
-      <a class="btn btn-s" href="https://yandex.ru/maps/org/pk_flagman/139678294139/reviews/" target="_blank" rel="noopener">Отзывы о производстве</a>
-    </div>
-  </div>
-</section>
-
 <section class="sec" id="terms">
   <div class="wrap">
     <div class="sec-hd"><h2>Как мы работаем</h2></div>
@@ -1106,16 +1015,16 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
       <div class="term-grp">
         <h3>Отгрузка и доставка</h3>
         <dl>
-          <div class="row"><dt>Самовывоз</dt><dd>Со склада на 1-й Северо-Западной, 13. В день обращения по позициям в наличии.</dd></div>
-          <div class="row"><dt>Доставка</dt><dd>По Магнитогорску и Челябинской области. В соседние регионы транспортными компаниями.</dd></div>
-          <div class="row"><dt>Объём</dt><dd>От одной пачки. Крупный опт отгружаем фурами.</dd></div>
+          <div class="row"><dt>Самовывоз</dt><dd>Со склада на Комсомольской, 127/1. В день обращения по позициям в наличии.</dd></div>
+          <div class="row"><dt>Доставка</dt><dd>По Магнитогорску и Челябинской области. В соседние регионы своим собственным транспортом.</dd></div>
+          <div class="row"><dt>Объём</dt><dd>От одной пачки.</dd></div>
         </dl>
       </div>
       <div class="term-grp">
         <h3>Оплата и документы</h3>
         <dl>
-          <div class="row"><dt>Оплата</dt><dd>Наличными, картой или безналичным расчётом.</dd></div>
-          <div class="row"><dt>Цены</dt><dd>При регулярных отгрузках согласуем индивидуальный прайс.</dd></div>
+          <div class="row"><dt>Оплата</dt><dd>Безналичным расчётом с НДС.</dd></div>
+          <div class="row"><dt>Цены</dt><dd>Индивидуальный подход к каждому клиенту.</dd></div>
         </dl>
       </div>
     </div>
@@ -1139,7 +1048,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 <section class="geo" id="geo">
   <div class="wrap">
     <h2>География поставок</h2>
-    <p class="geo-lead">Отгружаем со склада в Магнитогорске. По городу и области возим своим транспортом, в остальные регионы отправляем транспортными компаниями.</p>
+    <p class="geo-lead">Отгружаем со склада в Магнитогорске. По городу и области возим своим транспортом, в остальные регионы — своим собственным.</p>
 
     <!-- cities placed by their real bearing from Magnitogorsk, distance compressed to fit -->
     <svg class="geo-map" viewBox="82 12 762 306" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Карта поставок: Магнитогорск и города отгрузки">
@@ -1202,11 +1111,11 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
       </div>
       <div class="faq-i">
         <h3>Возите в другие города?</h3>
-        <p>По Магнитогорску и Челябинской области доставляем своим транспортом. В соседние регионы отправляем транспортными компаниями за ваш счёт или за наш, по договорённости.</p>
+        <p>По Магнитогорску и Челябинской области доставляем своим транспортом. В соседние регионы возим своим собственным транспортом, условия обсуждаем при заказе.</p>
       </div>
       <div class="faq-i">
         <h3>Делаете нестандартные размеры?</h3>
-        <p>Да, это одно из преимуществ собственного производства. Режем штрипс под вашу ширину. Сроки обсуждаем при заказе.</p>
+        <p>Да, это одно из преимуществ собственного производства. Сроки обсуждаем при заказе.</p>
       </div>
       <div class="faq-i">
         <h3>Из какого металла производите?</h3>
@@ -1248,9 +1157,9 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 
     <div class="ct-info">
       <h2>Контакты</h2>
-      <div class="ct-item"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></svg><div><b>Телефон</b><a href="tel:+79681163721">+7 (968) 116-37-21</a></div></div>
+      <div class="ct-item"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></svg><div><b>Телефон</b><a href="tel:+79681163721">+7 (968) 116-37-21</a><br><a href="tel:+73519581437">+7 (3519) 58-14-37</a></div></div>
       <div class="ct-item"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"/></svg><div><b>Электронная почта</b><a href="mailto:kompleks-mgn@mail.ru">kompleks-mgn@mail.ru</a></div></div>
-      <div class="ct-item"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></svg><div><b>Склад и офис</b><span class="plain">Челябинская область, г. Магнитогорск, ул. 1-я Северо-Западная, 13</span></div></div>
+      <div class="ct-item"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></svg><div><b>Склад и офис</b><span class="plain">455017, Челябинская область, г. Магнитогорск, ул. Комсомольская, 127/1</span></div></div>
       <div class="req">
         ООО «ТД Флагман»<br>
         ИНН 7456050032 / КПП 745601001<br>
@@ -1259,7 +1168,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 
       <div class="map-wrap">
         <iframe title="Схема проезда к складу ТД Флагман" loading="lazy" allowfullscreen
-          src="https://yandex.ru/map-widget/v1/?oid=139678294139&ol=biz&z=17"></iframe>
+          src="https://yandex.ru/map-widget/v1/?oid=70650983617&ol=biz&z=17"></iframe>
       </div>
     </div>
   </div>
