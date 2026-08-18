@@ -138,18 +138,22 @@ p{margin:0}
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
 .hero-img{position:relative;padding:8px 0;min-width:0;cursor:pointer}
-.hero-img img{width:100%;height:auto;display:block}
 
-/* the profile feeds in from the top-right corner, past the phone number, the way it
-   would come off the roll-forming line. slow, single pass, then it rests. */
+/* the roll-forming line, with the finished profile fed out from under it.
+   the rail is a separate cut-out so it can travel along its own axis. */
+.mach{position:relative;width:100%}
+.mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
+.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
+
 @media (prefers-reduced-motion:no-preference){
-  /* held off-frame until the block is actually on screen, otherwise on phones the
-     profile finishes travelling before the visitor has scrolled down to it */
-  .hero-img.armed img{transform:translate(96%,-62%)}
-  .hero-img.armed.go img{animation:profileOut 2.4s cubic-bezier(.2,.75,.25,1) both}
+  /* parked under the machine until the block is on screen, otherwise on phones
+     the profile finishes travelling before the visitor scrolls down to it */
+  .hero-img.armed .mach-rail{transform:translate(100%,-24%)}
+  .hero-img.armed.go .mach-rail{animation:railOut 2.4s cubic-bezier(.2,.75,.25,1) both}
 }
-@keyframes profileOut{
-  from{transform:translate(96%,-62%)}
+/* travels left and slightly down, following the tilt of the profile itself */
+@keyframes railOut{
+  from{transform:translate(100%,-24%)}
   to{transform:translate(0,0)}
 }
 
@@ -541,7 +545,12 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
         <a class="btn btn-s" href="#request">Запросить прайс</a>
       </div>
     </div>
-    <div class="hero-img rv"><img src="assets/hero.webp" alt="Профиль для гипсокартона производства ТД Флагман" fetchpriority="high"></div>
+    <div class="hero-img rv">
+      <div class="mach">
+        <img class="mach-body" src="assets/mach_body.webp" alt="Профилегибочная линия ТД Флагман" fetchpriority="high">
+        <img class="mach-rail" src="assets/mach_rail.webp" alt="Профиль на выходе из линии">
+      </div>
+    </div>
   </div>
 </section>
 
