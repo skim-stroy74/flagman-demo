@@ -130,7 +130,7 @@ p{margin:0}
 /* clipping lives on the section so the profile can travel in from the page corner,
    not from the edge of its own column - and the page still never scrolls sideways */
 .hero{padding:clamp(40px,6vw,72px) 0 clamp(36px,5vw,60px);overflow:hidden}
-.hero-in{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:clamp(28px,5vw,60px);align-items:center}
+.hero-in{display:grid;grid-template-columns:minmax(0,0.82fr) minmax(0,1.35fr);gap:clamp(20px,3vw,40px);align-items:center}
 .hero h1{font-size:clamp(28px,3.5vw,42px)}
 .hero-sub{margin-top:20px;font-size:clamp(16.5px,1.5vw,19px);color:var(--ink-2);max-width:36ch}
 .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
@@ -141,7 +141,8 @@ p{margin:0}
 
 /* the roll-forming line, with the finished profile fed out from under it.
    the rail is a separate cut-out so it can travel along its own axis. */
-.mach{position:relative;width:100%}
+/* the line runs wider than its column and off the right edge, so it reads big */
+.mach{position:relative;width:126%;margin-right:-26%}
 .mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
 .mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
 
@@ -423,6 +424,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   .hero-in,.ct,.terms,.offer,.calc{grid-template-columns:minmax(0,1fr)}
   /* on phones the profile leads: it is the first thing in view */
   .hero-img{order:-1;margin-bottom:8px}
+  .mach{width:112%;margin-right:-12%}
   /* on phones the profile leads: it is the first thing on screen, then the pitch */
   .hero-img{order:-1;margin-bottom:6px}
   .hero-sub{max-width:none}
