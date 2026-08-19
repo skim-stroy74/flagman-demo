@@ -236,6 +236,30 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .sklad-shot img{width:100%;aspect-ratio:21/9;object-fit:cover;border-radius:var(--r)}
 .sklad-shot figcaption{margin-top:13px;font-size:15px;color:var(--ink-3);max-width:60ch}
 
+/* ---------- workshop gallery ---------- */
+.shots{margin-top:clamp(26px,3.4vw,40px);display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.2vw,16px)}
+.shots button{padding:0;border:1px solid #33465e;border-radius:var(--r);overflow:hidden;background:none;
+  cursor:pointer;display:block;transition:border-color .18s,transform .12s}
+.shots button:hover{border-color:#5b9ad9;transform:translateY(-2px)}
+.shots img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.shots-note{margin-top:12px;font-size:14px;color:#8ea0b6}
+
+/* full-screen viewer */
+.lb{position:fixed;inset:0;z-index:90;background:rgba(6,10,16,.94);display:none;
+  align-items:center;justify-content:center;padding:clamp(12px,3vw,48px)}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--r)}
+.lb-btn{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;
+  background:rgba(25,34,47,.9);border:1px solid #3a4a60;color:var(--ink);font-size:26px;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-btn:hover{background:rgba(35,48,66,.95)}
+.lb-prev{left:clamp(8px,2vw,28px)}
+.lb-next{right:clamp(8px,2vw,28px)}
+.lb-close{position:absolute;top:clamp(10px,2vw,24px);right:clamp(10px,2vw,24px);width:46px;height:46px;
+  border-radius:50%;background:rgba(25,34,47,.9);border:1px solid #3a4a60;color:var(--ink);font-size:22px;cursor:pointer}
+.lb-count{position:absolute;bottom:clamp(12px,2.5vw,28px);left:50%;transform:translateX(-50%);
+  font-size:14px;color:#9fb0c6;background:rgba(15,21,31,.8);padding:6px 14px;border-radius:999px}
+
 /* ---------- own-production spec lists ---------- */
 .spec-list{padding:0 0 22px;margin:0;list-style:none;display:grid}
 .spec-list a{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
@@ -489,6 +513,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   .pcard-b{padding:11px 12px 13px}
   .pcard-b h4{font-size:14.5px}
   .also-grid{grid-template-columns:1fr}
+  .shots{grid-template-columns:repeat(3,1fr)}
   .sklad-shot img{aspect-ratio:4/3}
   /* nowrap labels + flex-basis:0 stop wrap from kicking in and push the page wide,
      so on narrow screens the two CTAs simply stack */
@@ -803,6 +828,15 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
         <li><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg><span>Профиль нестандартной длины под заказ</span></li>
       </ul>
       <a class="btn btn-g" href="#request">Запросить прайс<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></a>
+
+      <div class="shots">
+        <button type="button" data-shot="0"><img src="assets/ceh1_t.webp" alt="Цех ТД Флагман, фото 1" loading="lazy"></button>
+        <button type="button" data-shot="1"><img src="assets/ceh2_t.webp" alt="Цех ТД Флагман, фото 2" loading="lazy"></button>
+        <button type="button" data-shot="2"><img src="assets/ceh3_t.webp" alt="Цех ТД Флагман, фото 3" loading="lazy"></button>
+        <button type="button" data-shot="3"><img src="assets/ceh4_t.webp" alt="Цех ТД Флагман, фото 4" loading="lazy"></button>
+        <button type="button" data-shot="4"><img src="assets/ceh5_t.webp" alt="Цех ТД Флагман, фото 5" loading="lazy"></button>
+      </div>
+      <p class="shots-note">Нажмите на фото, чтобы рассмотреть. Листается стрелками и свайпом.</p>
     </div>
   </div>
 </section>
@@ -1371,6 +1405,14 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   </div>
 </div>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Фотографии цеха">
+  <button class="lb-close" type="button" data-lb-close aria-label="Закрыть">✕</button>
+  <button class="lb-btn lb-prev" type="button" data-lb-prev aria-label="Предыдущее">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-btn lb-next" type="button" data-lb-next aria-label="Следующее">›</button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+
 <footer class="ft">
   <div class="wrap">
     <div class="ft-in">
@@ -1572,6 +1614,47 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
     var form = document.getElementById('request');
     if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+})();
+
+// workshop gallery viewer: open, step through, close
+(function(){
+  var lb = document.getElementById("lb");
+  if (!lb) return;
+  var img = document.getElementById("lb-img");
+  var count = document.getElementById("lb-count");
+  var shots = ["assets/ceh1_f.webp", "assets/ceh2_f.webp", "assets/ceh3_f.webp", "assets/ceh4_f.webp", "assets/ceh5_f.webp"];
+  var i = 0;
+
+  var show = function(n){
+    i = (n + shots.length) % shots.length;
+    img.src = shots[i];
+    count.textContent = (i + 1) + " из " + shots.length;
+  };
+  var open = function(n){ show(n); lb.classList.add("open"); document.body.style.overflow = "hidden"; };
+  var close = function(){ lb.classList.remove("open"); document.body.style.overflow = ""; };
+
+  document.querySelectorAll("[data-shot]").forEach(function(b){
+    b.addEventListener("click", function(){ open(parseInt(b.getAttribute("data-shot"), 10)); });
+  });
+  lb.querySelector("[data-lb-close]").addEventListener("click", close);
+  lb.querySelector("[data-lb-prev]").addEventListener("click", function(e){ e.stopPropagation(); show(i - 1); });
+  lb.querySelector("[data-lb-next]").addEventListener("click", function(e){ e.stopPropagation(); show(i + 1); });
+  lb.addEventListener("click", function(e){ if (e.target === lb) close(); });
+  document.addEventListener("keydown", function(e){
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(i - 1);
+    if (e.key === "ArrowRight") show(i + 1);
+  });
+  // swipe on touch screens
+  var x0 = null;
+  lb.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 45) show(i + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, { passive: true });
 })();
 
 // policy modal
