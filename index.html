@@ -264,6 +264,68 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .lb-count{position:absolute;bottom:clamp(12px,2.5vw,28px);left:50%;transform:translateX(-50%);
   font-size:14px;color:#9fb0c6;background:rgba(15,21,31,.8);padding:6px 14px;border-radius:999px}
 
+/* ---------- figures that count up on scroll ---------- */
+.stats-band{background:var(--bg)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);
+  padding:clamp(34px,4.6vw,58px) 0;text-align:center}
+.stat{display:grid;gap:9px;justify-items:center}
+.stat-n{font-size:clamp(34px,5vw,56px);font-weight:750;line-height:1;color:var(--accent);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat-l{font-size:15px;color:var(--ink-2);max-width:17ch;line-height:1.35}
+@media(max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}
+  .stat-l{font-size:14px}
+}
+
+/* ---------- request basket ---------- */
+.pcard-img{position:relative}
+.pcard.picked{border-color:var(--accent)}
+.pcard.picked .pcard-img::after{content:'';position:absolute;top:8px;right:8px;width:26px;height:26px;
+  border-radius:50%;background:var(--accent);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9.6 16.2 4.8 11.4l1.4-1.4 3.4 3.4 8-8L19 6.8z'/%3E%3C/svg%3E");
+  background-size:17px;background-position:center;background-repeat:no-repeat;
+  box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.card.rv.picked{border-color:var(--accent)}
+.spec-list a.picked{color:var(--accent)}
+.spec-list a.picked .pk::after{content:' \2713'}
+
+.cart{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(15,21,31,.97);
+  backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  transform:translateY(110%);visibility:hidden;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1),visibility 0s linear .3s}
+.cart.show{transform:translateY(0);visibility:visible;
+  transition:transform .3s cubic-bezier(.2,.8,.3,1),visibility 0s}
+.cart-in{padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom))}
+.cart-bar{display:flex;align-items:center;gap:14px}
+.cart-tg{flex:1;min-width:0;display:flex;align-items:center;gap:11px;background:none;border:0;padding:6px 0;
+  color:var(--ink);font-family:inherit;font-size:15.5px;font-weight:600;cursor:pointer;text-align:left}
+.cart-n{flex-shrink:0;min-width:30px;height:30px;padding:0 8px;border-radius:999px;background:var(--accent);
+  color:var(--btn-ink);display:inline-flex;align-items:center;justify-content:center;
+  font-size:14.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.cart-n.bump{animation:cartBump .36s cubic-bezier(.2,.8,.3,1)}
+@keyframes cartBump{0%{transform:scale(1)}40%{transform:scale(1.4)}100%{transform:scale(1)}}
+.cart-chev{flex-shrink:0;width:9px;height:9px;border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+  transform:rotate(-135deg);transition:transform .22s}
+.cart.open .cart-chev{transform:rotate(45deg)}
+.cart-list{display:none;max-height:36vh;overflow-y:auto;margin:0 0 10px;padding:0;list-style:none}
+.cart.open .cart-list{display:block}
+.cart-list li{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--line-2);font-size:15px}
+.cart-list li span{flex:1;min-width:0}
+.cart-x{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:none;border:1px solid #3a4a60;
+  color:var(--ink-3);font-size:17px;line-height:1;cursor:pointer;font-family:inherit}
+.cart-x:hover{color:var(--ink);border-color:var(--ink-3)}
+.cart-clr{background:none;border:0;color:var(--ink-3);font:inherit;font-size:14px;cursor:pointer;
+  padding:8px 2px;text-decoration:underline}
+.cart-clr:hover{color:var(--ink)}
+/* the basket takes over the bottom edge from the mobile call bar */
+body.cart-on .mbar{display:none!important}
+body.cart-open .fab-menu{display:none!important}
+@media(max-width:640px){
+  .cart-bar{gap:10px}
+  .cart-tg{font-size:14.5px}
+  .cart-bar .btn{padding:12px 16px;font-size:15px}
+}
+
 /* ---------- own-production spec lists ---------- */
 .spec-list{padding:0 0 22px;margin:0;list-style:none;display:grid}
 .spec-list a{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
@@ -754,24 +816,31 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 <section class="sec tinted" id="calc">
   <div class="wrap">
     <div class="sec-hd">
-      <h2>Калькулятор перегородки</h2>
-      <p>Посчитайте, сколько профиля и листа нужно на перегородку. Расчёт по одинарному металлическому каркасу с обшивкой гипсокартоном.</p>
+      <h2>Калькулятор материалов</h2>
+      <p>Посчитайте, сколько профиля, листа и расходников нужно на перегородку или подвесной потолок. Расчёт по металлическому каркасу с обшивкой гипсокартоном.</p>
     </div>
 
     <div class="calc">
       <div class="calc-form">
+        <div class="calc-f">
+          <label for="c-type">Что считаем</label>
+          <select id="c-type">
+            <option value="wall">Перегородку из гипсокартона</option>
+            <option value="ceil">Подвесной потолок</option>
+          </select>
+        </div>
         <div class="calc-row">
           <div class="calc-f">
-            <label for="c-len">Длина стены, м</label>
+            <label for="c-len" id="l-len">Длина стены, м</label>
             <input id="c-len" type="number" min="0.5" max="200" step="0.1" value="6">
           </div>
           <div class="calc-f">
-            <label for="c-h">Высота, м</label>
+            <label for="c-h" id="l-h">Высота, м</label>
             <input id="c-h" type="number" min="0.5" max="10" step="0.1" value="2.7">
           </div>
         </div>
         <div class="calc-row">
-          <div class="calc-f">
+          <div class="calc-f" id="f-width">
             <label for="c-width">Ширина профиля</label>
             <select id="c-width">
               <option value="50">ПН 50/40 и ПС 50/50</option>
@@ -780,7 +849,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
             </select>
           </div>
           <div class="calc-f">
-            <label for="c-step">Шаг стоек</label>
+            <label for="c-step" id="l-step">Шаг стоек</label>
             <select id="c-step">
               <option value="0.6">600 мм</option>
               <option value="0.4">400 мм, под плитку</option>
@@ -789,7 +858,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
         </div>
         <div class="calc-row">
           <div class="calc-f">
-            <label for="c-layers">Обшивка</label>
+            <label for="c-layers" id="l-layers">Обшивка</label>
             <select id="c-layers">
               <option value="2">1 слой с двух сторон</option>
               <option value="4">2 слоя с двух сторон</option>
@@ -804,7 +873,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
             </select>
           </div>
         </div>
-        <p class="calc-hint">Профиль считается хлыстами по 3 метра, лист — 1200×2500 мм. К результату добавлено 10% на подрезку.</p>
+        <p class="calc-hint" id="c-hint">Профиль считается хлыстами по 3 метра, лист — 1200×2500 мм. К результату добавлено 10% на подрезку.</p>
         <button class="btn btn-p" type="button" id="c-go">Рассчитать<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
       </div>
 
@@ -812,7 +881,7 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
         <div class="calc-out" id="c-out">
           <div class="calc-empty">Укажите размеры и нажмите «Рассчитать»</div>
         </div>
-        <p class="calc-note">Расчёт предварительный: не учитывает дверные проёмы, примыкания и сложные узлы. Для точной спецификации пришлите чертёж, посчитаем вручную.</p>
+        <p class="calc-note">Шпаклёвка и грунтовка посчитаны на заделку швов: 0,5 кг и 0,1 л на м² обшивки. Сплошное шпаклевание считается отдельно.<br>Расчёт предварительный: не учитывает дверные проёмы, примыкания и сложные узлы. Для точной спецификации пришлите чертёж, посчитаем вручную.</p>
         <div class="calc-actions">
           <button class="btn btn-p" type="button" id="c-send" hidden>Отправить расчёт в заявку<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
         </div>
@@ -842,6 +911,15 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
       </div>
       <p class="shots-note">Нажмите на фото, чтобы рассмотреть. Листается стрелками и свайпом.</p>
     </div>
+  </div>
+</section>
+
+<section class="stats-band">
+  <div class="wrap stats">
+    <div class="stat"><span class="stat-n" data-to="130" data-suf="+">0</span><span class="stat-l">позиций на складе</span></div>
+    <div class="stat"><span class="stat-n" data-to="18">0</span><span class="stat-l">наименований своего производства</span></div>
+    <div class="stat"><span class="stat-n" data-to="8">0</span><span class="stat-l">брендов отделочных материалов</span></div>
+    <div class="stat"><span class="stat-n" data-to="10">0</span><span class="stat-l">городов отгрузки</span></div>
   </div>
 </section>
 
@@ -1457,6 +1535,20 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   <div class="lb-count" id="lb-count"></div>
 </div>
 
+<div class="cart" id="cart" aria-live="polite">
+  <div class="wrap cart-in">
+    <ul class="cart-list" id="cart-list"></ul>
+    <div class="cart-bar">
+      <button class="cart-tg" type="button" id="cart-tg" aria-expanded="false">
+        <span class="cart-n" id="cart-n">0</span>
+        <span id="cart-txt">позиций в заявке</span>
+        <span class="cart-chev"></span>
+      </button>
+      <button class="btn btn-p" type="button" id="cart-go">Отправить запрос<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
+    </div>
+  </div>
+</div>
+
 <footer class="ft">
   <div class="wrap">
     <div class="ft-in">
@@ -1570,12 +1662,14 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   setTimeout(function(){ if (!started) restore(); }, 6000);
 })();
 
-// partition calculator: single metal frame, 3 m profile lengths, 1200x2500 boards
+// materials calculator: partition on a single metal frame, or a suspended
+// ceiling on a one-level PP 60/27 grid. Stock lengths 3 m, boards 1200x2500.
 (function(){
   var out = document.getElementById('c-out');
   var go = document.getElementById('c-go');
   var send = document.getElementById('c-send');
-  if (!out || !go) return;
+  var type = document.getElementById('c-type');
+  if (!out || !go || !type) return;
 
   var LEN = 3;            // profile stock length, m
   var SHEET_W = 1.2, SHEET_H = 2.5;
@@ -1583,53 +1677,152 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   var num = function(id){ return parseFloat(document.getElementById(id).value.replace(',', '.')) || 0; };
   var val = function(id){ return document.getElementById(id).value; };
   var up = function(x){ return Math.ceil(x - 1e-9); };
+  var pack = function(x, n){ return up(x / n) * n; };
+  var ru = function(x){ return String(x).replace('.', ','); };
   var last = null;
 
-  var calc = function(){
+  var HINTS = {
+    wall: 'Профиль считается хлыстами по 3 метра, лист — 1200×2500 мм. К результату добавлено 10% на подрезку.',
+    ceil: 'Одноуровневый каркас на ПП 60/27: подвесы через 900 мм, поперечины на стыках листов. Профиль хлыстами по 3 м, плюс 10% на подрезку.'
+  };
+  var STEPS = {
+    wall: [['0.6', '600 мм'], ['0.4', '400 мм, под плитку']],
+    ceil: [['0.6', '600 мм'], ['0.5', '500 мм, под плитный потолок']]
+  };
+  var LAYERS = {
+    wall: [['2', '1 слой с двух сторон'], ['4', '2 слоя с двух сторон'], ['1', '1 слой с одной стороны']],
+    ceil: [['1', '1 слой'], ['2', '2 слоя']]
+  };
+
+  var fill = function(id, opts){
+    var el = document.getElementById(id);
+    var keep = el.value;
+    el.innerHTML = '';
+    opts.forEach(function(o){
+      var op = document.createElement('option');
+      op.value = o[0]; op.textContent = o[1];
+      el.appendChild(op);
+    });
+    // hold the previous choice when it still exists in the new mode
+    for (var k = 0; k < opts.length; k++) if (opts[k][0] === keep) { el.value = keep; return; }
+  };
+
+  var mode = function(){
+    var t = type.value;
+    var ceil = t === 'ceil';
+    document.getElementById('l-len').textContent = ceil ? 'Длина помещения, м' : 'Длина стены, м';
+    document.getElementById('l-h').textContent = ceil ? 'Ширина помещения, м' : 'Высота, м';
+    document.getElementById('c-h').max = ceil ? 60 : 10;
+    document.getElementById('f-width').hidden = ceil;
+    document.getElementById('l-step').textContent = ceil ? 'Шаг несущих' : 'Шаг стоек';
+    document.getElementById('l-layers').textContent = 'Обшивка';
+    fill('c-step', STEPS[t]);
+    fill('c-layers', LAYERS[t]);
+    document.getElementById('c-hint').textContent = HINTS[t];
+    out.innerHTML = '<div class="calc-empty">Укажите размеры и нажмите «Рассчитать»</div>';
+    send.hidden = true;
+    last = null;
+  };
+
+  // joint taping is the same job whichever frame carries the boards
+  var finish = function(boardArea){
+    return [
+      ['Отделка швов', null],
+      ['Лента для швов (серпянка)', up(boardArea * 1.2) + ' м'],
+      ['Шпаклёвка для швов', up(boardArea * 0.5) + ' кг'],
+      ['Грунтовка', ru(Math.ceil(boardArea) / 10) + ' л']
+    ];
+  };
+
+  var wall = function(){
     var L = num('c-len'), H = num('c-h');
     if (L <= 0 || H <= 0) return null;
     var w = val('c-width'), step = parseFloat(val('c-step'));
     var sides = parseInt(val('c-layers'), 10);   // number of board layers in total
     var sheet = val('c-sheet');
 
-    // guide profile runs along floor and ceiling
-    var pnMeters = 2 * L;
+    var pnMeters = 2 * L;                        // guide runs along floor and ceiling
     var pn = up(pnMeters * SPARE / LEN);
-
-    // studs: one every step, plus the closing one at the end
-    var studs = up(L / step) + 1;
-    // a stud is cut from one stock length while the wall is not taller than it
-    var psPerStock = H <= LEN ? 1 : 0;
-    var ps = psPerStock ? up(studs * SPARE) : up(studs * H * SPARE / LEN);
+    var studs = up(L / step) + 1;                // one every step, plus the closing one
+    var ps = H <= LEN ? up(studs * SPARE) : up(studs * H * SPARE / LEN);
 
     var area = L * H * sides;
     var sheets = up(area * SPARE / (SHEET_W * SHEET_H));
-
-    // consumables, rounded to sensible pack talk
-    var screwsBoard = up(area * 30 / 100) * 100;      // ~30 per m2
-    var screwsFrame = up(studs * 8 / 50) * 50;        // frame joints
-    var dowels = up(pnMeters / 0.5);                  // guide fixed every 500 mm
-    var tape = up(pnMeters * SPARE);                  // sealing tape under guides
+    var screwsBoard = pack(area * 30, 100);
+    var screwsFrame = pack(studs * 8, 50);
+    var dowels = up(pnMeters / 0.5);             // guide fixed every 500 mm
+    var tape = up(pnMeters * SPARE);
 
     return {
-      w: w, step: step * 1000, sheet: sheet, sides: sides, L: L, H: H,
+      title: 'Расчёт перегородки ' + ru(L) + ' × ' + ru(H) + ' м, профиль ' + w + ' мм, шаг ' + (step * 1000) + ' мм',
       rows: [
         ['Каркас', null],
         ['Профиль направляющий ПН ' + w + '/40', pn + ' хл.'],
         ['Профиль стоечный ПС ' + w + '/50', ps + ' хл.'],
         ['Обшивка', null],
-        ['Гипсокартон ' + sheet.replace('.', ',') + ' мм, 1200×2500', sheets + ' л.'],
-        ['Расходники', null],
+        ['Гипсокартон ' + ru(sheet) + ' мм, 1200×2500', sheets + ' л.'],
+        ['Крепёж', null],
         ['Саморезы по гипсокартону', screwsBoard + ' шт.'],
         ['Саморезы по металлу', screwsFrame + ' шт.'],
         ['Дюбель-гвозди', dowels + ' шт.'],
         ['Лента уплотнительная', tape + ' м']
-      ]
+      ].concat(finish(area))
+    };
+  };
+
+  var ceiling = function(){
+    var L = num('c-len'), W = num('c-h');
+    if (L <= 0 || W <= 0) return null;
+    var step = parseFloat(val('c-step'));
+    var layers = parseInt(val('c-layers'), 10);
+    var sheet = val('c-sheet');
+
+    var area = L * W;
+    var per = 2 * (L + W);
+    var pn28 = up(per * SPARE / LEN);
+
+    var rows = up(W / step) + 1;                 // carrying profiles run along L
+    var carry = rows * L;
+    var nCross = Math.max(0, up(L / SHEET_H) - 1);   // cross pieces land on board joints
+    var cross = nCross * Math.max(0, rows - 1) * step;
+    var pp = up((carry + cross) * SPARE / LEN);
+
+    var hangers = rows * (up(L / 0.9) + 1);      // every 900 mm along each carrier
+    var crabs = nCross * rows;
+    var ext = L > LEN ? rows * (up(L / LEN) - 1) : 0;
+
+    var boardArea = area * layers;
+    var sheets = up(boardArea * SPARE / (SHEET_W * SHEET_H));
+    var screwsBoard = pack(boardArea * 30, 100);
+    var screwsFrame = pack(crabs * 4 + hangers * 4, 50);
+    var dowels = up(per / 0.5);
+
+    var frame = [
+      ['Каркас', null],
+      ['Профиль направляющий ПН 28/27', pn28 + ' хл.'],
+      ['Профиль потолочный ПП 60/27', pp + ' хл.'],
+      ['Подвес прямой', hangers + ' шт.']
+    ];
+    if (crabs) frame.push(['Соединитель одноуровневый (краб)', crabs + ' шт.']);
+    if (ext) frame.push(['Удлинитель профиля ПП', ext + ' шт.']);
+
+    return {
+      title: 'Расчёт подвесного потолка ' + ru(L) + ' × ' + ru(W) + ' м, шаг несущих ' + (step * 1000) + ' мм',
+      rows: frame.concat([
+        ['Обшивка', null],
+        ['Гипсокартон ' + ru(sheet) + ' мм, 1200×2500', sheets + ' л.'],
+        ['Крепёж', null],
+        ['Анкер-клин для подвесов', hangers + ' шт.'],
+        ['Дюбель-гвозди по периметру', dowels + ' шт.'],
+        ['Саморезы по гипсокартону', screwsBoard + ' шт.'],
+        ['Саморезы по металлу', screwsFrame + ' шт.'],
+        ['Лента уплотнительная', up(per * SPARE) + ' м']
+      ]).concat(finish(boardArea))
     };
   };
 
   var render = function(r){
-    if (!r) { out.innerHTML = '<div class="calc-empty">Проверьте длину и высоту</div>'; send.hidden = true; return; }
+    if (!r) { out.innerHTML = '<div class="calc-empty">Проверьте размеры</div>'; send.hidden = true; return; }
     var html = '<table><thead><tr><th>Позиция</th><th style="text-align:right">Нужно</th></tr></thead><tbody>';
     r.rows.forEach(function(row){
       html += row[1] === null
@@ -1641,23 +1834,25 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
     last = r;
   };
 
-  go.addEventListener('click', function(){ render(calc()); });
+  type.addEventListener('change', mode);
+  go.addEventListener('click', function(){ render(type.value === 'ceil' ? ceiling() : wall()); });
 
   send.addEventListener('click', function(){
     if (!last) return;
     var msg = document.getElementById('f-msg');
-    var lines = ['Расчёт перегородки ' + last.L + ' × ' + last.H + ' м, профиль ' + last.w +
-                 ' мм, шаг ' + last.step + ' мм:'];
+    var lines = [last.title + ':'];
     last.rows.forEach(function(row){ if (row[1] !== null) lines.push('- ' + row[0] + ': ' + row[1]); });
     var text = lines.join('\n');
-    if (msg && msg.value.indexOf('Расчёт перегородки') === -1) {
-      msg.value = msg.value ? msg.value + '\n\n' + text : text;
-    } else if (msg) {
-      msg.value = text;
+    if (msg) {
+      // replace an earlier calculation instead of stacking two of them
+      var cur = msg.value.replace(/Расчёт (перегородки|подвесного потолка)[\s\S]*?(?=\n\n|$)/, '').trim();
+      msg.value = cur ? cur + '\n\n' + text : text;
     }
     var form = document.getElementById('request');
     if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  mode();
 })();
 
 // workshop gallery viewer: open, step through, close
@@ -1807,25 +2002,185 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   });
 })();
 
-// clicking a product carries its name into the request form, so the visitor
-// does not have to retype what they were just looking at
+// figures run up once they are scrolled into view
 (function(){
+  var els = [].slice.call(document.querySelectorAll('.stat-n'));
+  if (!els.length) return;
+  var band = document.querySelector('.stats');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var done = false;
+
+  var settle = function(){
+    els.forEach(function(el){
+      el.textContent = el.getAttribute('data-to') + (el.getAttribute('data-suf') || '');
+    });
+  };
+
+  var run = function(){
+    if (done) return;
+    done = true;
+    if (reduce.matches || !window.requestAnimationFrame) { settle(); return; }
+    els.forEach(function(el){
+      var to = parseInt(el.getAttribute('data-to'), 10) || 0;
+      var suf = el.getAttribute('data-suf') || '';
+      var t0 = null, dur = 1150;
+      var step = function(t){
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(to * eased) + (p === 1 ? suf : '');
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  };
+
+  if (reduce.matches || !('IntersectionObserver' in window)) { settle(); return; }
+  var io = new IntersectionObserver(function(en){
+    if (en[0].isIntersecting) { io.disconnect(); run(); }
+  }, { threshold: 0.35 });
+  io.observe(band);
+  // the band may already be on screen at load, and some previews never composite
+  var r = band.getBoundingClientRect();
+  if (r.top < window.innerHeight && r.bottom > 0) run();
+  setTimeout(function(){ if (!done) settle(); }, 6000);
+})();
+
+// request basket: visitors collect positions across the whole catalogue and
+// send them as one enquiry instead of asking about a single item at a time
+(function(){
+  var bar = document.getElementById('cart');
   var msg = document.getElementById('f-msg');
-  if (!msg) return;
+  var list = document.getElementById('cart-list');
+  var nEl = document.getElementById('cart-n');
+  var txt = document.getElementById('cart-txt');
+  var tg = document.getElementById('cart-tg');
+  var go = document.getElementById('cart-go');
+  if (!bar || !list) return;
+
+  var KEY = 'flagman-cart';
+  var picked = [];
+  try { picked = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch (e) { picked = []; }
+  if (!Array.isArray(picked)) picked = [];
+
+  var nodes = {};   // item name -> every element offering it
   document.querySelectorAll('[data-item]').forEach(function(el){
-    el.addEventListener('click', function(){
-      var name = el.getAttribute('data-item');
-      var cur = msg.value.trim();
-      if (cur.split('\n').indexOf(name) === -1) {
-        msg.value = cur ? cur + '\n' + name : name;
-      }
-      // let the anchor scroll first, then highlight the field
-      setTimeout(function(){
-        msg.focus({ preventScroll: true });
-        msg.setSelectionRange(msg.value.length, msg.value.length);
-      }, 420);
+    var name = el.getAttribute('data-item');
+    (nodes[name] = nodes[name] || []).push(el);
+    // the label sits next to an arrow icon, so wrap it to swap the words alone
+    var ask = el.querySelector('.ask');
+    if (ask && ask.firstChild && ask.firstChild.nodeType === 3) {
+      var w = document.createElement('span');
+      w.className = 'ask-t';
+      w.textContent = ask.firstChild.nodeValue;
+      ask.replaceChild(w, ask.firstChild);
+    }
+    el.addEventListener('click', function(ev){
+      ev.preventDefault();
+      toggle(name);
     });
   });
+
+  var plural = function(n){
+    var a = n % 10, b = n % 100;
+    if (a === 1 && b !== 11) return 'позиция в заявке';
+    if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return 'позиции в заявке';
+    return 'позиций в заявке';
+  };
+
+  var mark = function(name, on){
+    (nodes[name] || []).forEach(function(el){
+      el.classList.toggle('picked', on);
+      var t = el.querySelector('.ask-t');
+      if (t) t.textContent = on ? 'В заявке' : 'Запросить цену';
+    });
+  };
+
+  var draw = function(bump){
+    list.innerHTML = '';
+    picked.forEach(function(name){
+      var li = document.createElement('li');
+      var sp = document.createElement('span');
+      sp.textContent = name;
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.className = 'cart-x';
+      x.setAttribute('aria-label', 'Убрать ' + name);
+      x.textContent = '\u00d7';
+      x.addEventListener('click', function(){ toggle(name); });
+      li.appendChild(sp); li.appendChild(x);
+      list.appendChild(li);
+    });
+    if (picked.length) {
+      var clr = document.createElement('li');
+      var cb = document.createElement('button');
+      cb.type = 'button'; cb.className = 'cart-clr'; cb.textContent = 'Очистить список';
+      cb.addEventListener('click', function(){ clear(); });
+      clr.style.borderBottom = '0';
+      clr.appendChild(cb);
+      list.appendChild(clr);
+    }
+    nEl.textContent = picked.length;
+    txt.textContent = plural(picked.length);
+    var on = picked.length > 0;
+    bar.classList.toggle('show', on);
+    document.body.classList.toggle('cart-on', on);
+    if (!on) {
+      bar.classList.remove('open');
+      document.body.classList.remove('cart-open');
+      tg.setAttribute('aria-expanded', 'false');
+    }
+    if (bump) {
+      nEl.classList.remove('bump');
+      void nEl.offsetWidth;          // restart the animation on a repeat click
+      nEl.classList.add('bump');
+    }
+    try { sessionStorage.setItem(KEY, JSON.stringify(picked)); } catch (e) {}
+  };
+
+  var toggle = function(name){
+    var at = picked.indexOf(name);
+    if (at === -1) { picked.push(name); mark(name, true); draw(true); }
+    else { picked.splice(at, 1); mark(name, false); draw(false); }
+  };
+
+  var clear = function(){
+    picked.slice().forEach(function(n){ mark(n, false); });
+    picked = [];
+    draw(false);
+  };
+
+  tg.addEventListener('click', function(){
+    var open = !bar.classList.contains('open');
+    bar.classList.toggle('open', open);
+    document.body.classList.toggle('cart-open', open);
+    tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  go.addEventListener('click', function(){
+    if (!picked.length) return;
+    if (msg) {
+      var block = 'Прошу цену на позиции:\n' + picked.map(function(n){ return '- ' + n; }).join('\n');
+      var cur = msg.value.replace(/Прошу цену на позиции:[\s\S]*?(?=\n\n|$)/, '').trim();
+      msg.value = cur ? cur + '\n\n' + block : block;
+    }
+    bar.classList.remove('open');
+    document.body.classList.remove('cart-open');
+    var form = document.getElementById('request');
+    if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(function(){
+      var nm = document.getElementById('f-name');
+      if (nm) nm.focus({ preventScroll: true });
+    }, 500);
+  });
+
+  var form = document.getElementById('request');
+  if (form) form.addEventListener('submit', function(){
+    try { sessionStorage.removeItem(KEY); } catch (e) {}
+  });
+
+  picked.forEach(function(n){ mark(n, true); });
+  draw(false);
 })();
 (function(){
   var m = window.matchMedia('(prefers-reduced-motion: reduce)');
