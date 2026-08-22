@@ -148,7 +148,7 @@ p{margin:0}
    -------------------------------------------------------------------- */
 :root[data-theme="soft"]{
   color-scheme:light;
-  --ink:#232c35;--ink-2:#4c5964;--ink-3:#576270;
+  --ink:#232c35;--ink-2:#4c5964;--ink-3:#4f5a66;
   --line:#ccd4da;--line-2:#dae0e5;
   --bg:#e8ecef;--bg-2:#f5f7f8;
   --steel:#dde3e7;--steel-2:#d3dae0;
@@ -348,6 +348,23 @@ p{margin:0}
 .offer-b h3{font-size:clamp(21px,2.4vw,27px)}
 .offer-b p{margin-top:13px;color:var(--ink-2);font-size:16.5px;max-width:52ch}
 .offer-b .btn{margin-top:24px;align-self:flex-start}
+
+/* ---------- a photo behind each section -------------------------------
+   Same idea as the production block, but one still per section instead of a
+   cycle, and fainter: these sit behind reading material, not behind a claim.
+   The scrim tokens flip with the theme, so one set of rules serves both.
+   -------------------------------------------------------------------- */
+.has-bg{position:relative;overflow:hidden;isolation:isolate}
+.has-bg > .wrap{position:relative;z-index:1}
+.sec-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.sec-bg i{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1.2s ease;transform:scale(1.04)}
+.sec-bg i.on{opacity:.14}
+[data-theme="soft"] .sec-bg i.on{opacity:.10}
+.sec-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--prod-scrim-edge),var(--prod-scrim-mid) 30%,
+    var(--prod-scrim-mid) 70%,var(--prod-scrim-edge))}
+@media(prefers-reduced-motion:reduce){.sec-bg i{transition:none}}
 
 /* ---------- workshop stills drifting behind the production block ---------- */
 .prod{position:relative;overflow:hidden;isolation:isolate}
@@ -863,7 +880,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec" id="catalog">
+<section class="sec has-bg" id="catalog">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_catalog.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2>Каталог продукции</h2>
@@ -947,7 +965,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec" id="sizes">
+<section class="sec has-bg" id="sizes">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_sizes.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2>Типоразмеры профиля</h2>
@@ -974,7 +993,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec" id="assortment">
+<section class="sec has-bg" id="assortment">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_assort.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2>Ассортимент собственного производства</h2>
@@ -1076,7 +1096,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec tinted" id="calc">
+<section class="sec tinted has-bg" id="calc">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_calc.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2>Калькулятор материалов</h2>
@@ -1203,7 +1224,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="stats-band">
+<section class="stats-band has-bg">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_stats.webp"></i></div>
   <div class="wrap stats">
     <div class="stat"><span class="stat-n" data-to="130" data-suf="+">0</span><span class="stat-l">позиций на складе</span></div>
     <div class="stat"><span class="stat-n" data-to="18">0</span><span class="stat-l">наименований своего производства</span></div>
@@ -1212,7 +1234,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec tinted" id="materials">
+<section class="sec tinted has-bg" id="materials">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_mater.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2>Строительные материалы</h2>
@@ -1723,7 +1746,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec" id="terms">
+<section class="sec has-bg" id="terms">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_terms.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd"><h2>Как мы работаем</h2></div>
     <div class="terms">
@@ -1812,7 +1836,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec tinted">
+<section class="sec tinted has-bg">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_faq.webp"></i></div>
   <div class="wrap">
     <div class="sec-hd"><h2>Частые вопросы</h2></div>
     <div class="faq">
@@ -1840,7 +1865,8 @@ body.cart-open .fab-menu{display:none!important}
   </div>
 </section>
 
-<section class="sec" id="contacts">
+<section class="sec has-bg" id="contacts">
+  <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_contacts.webp"></i></div>
   <div class="wrap ct">
     <form class="form" id="request" method="POST" action="https://formsubmit.co/kompleks-mgn@mail.ru">
       <h2>Запросить прайс</h2>
@@ -2433,6 +2459,30 @@ body.cart-open .fab-menu{display:none!important}
   if (!band || !host) return;
   var layers = [].slice.call(band.querySelectorAll('i'));
   if (!layers.length) return;
+
+  // every other section carries a single still, loaded the same lazy way
+  [].slice.call(document.querySelectorAll('.sec-bg')).forEach(function(box){
+    var sec = box.parentElement, one = box.querySelector('i');
+    if (!sec || !one) return;
+    var shown = false;
+    var reveal = function(){
+      if (shown) return;
+      var r = sec.getBoundingClientRect();
+      if (r.top > window.innerHeight * 1.2 || r.bottom < 0) return;
+      shown = true;
+      one.style.backgroundImage = 'url("' + one.getAttribute('data-src') + '")';
+      one.classList.add('on');
+      window.removeEventListener('scroll', reveal);
+    };
+    reveal();
+    window.addEventListener('scroll', reveal, { passive: true });
+    if ('IntersectionObserver' in window) {
+      var io2 = new IntersectionObserver(function(en){
+        if (en[0].isIntersecting) { io2.disconnect(); reveal(); }
+      }, { threshold: 0.02 });
+      io2.observe(sec);
+    }
+  });
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var loaded = false, timer = null, at = 0;
