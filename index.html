@@ -63,6 +63,7 @@
   --r:6px;
   --maxw:1240px;
   --pad:clamp(16px,4vw,40px);
+  --prod-scrim-edge:rgba(15,21,31,.82);--prod-scrim-mid:rgba(15,21,31,.58);
 }
 *{box-sizing:border-box}
 /* our .btn sets display, which would otherwise beat the hidden attribute */
@@ -204,6 +205,19 @@ p{margin:0}
 .offer-b h3{font-size:clamp(21px,2.4vw,27px)}
 .offer-b p{margin-top:13px;color:var(--ink-2);font-size:16.5px;max-width:52ch}
 .offer-b .btn{margin-top:24px;align-self:flex-start}
+
+/* ---------- workshop stills drifting behind the production block ---------- */
+.prod{position:relative;overflow:hidden;isolation:isolate}
+.prod-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.prod-bg i{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:0;transition:opacity 1.8s ease;transform:scale(1.04)}
+.prod-bg i.on{opacity:.2}
+/* the scrim is what keeps the headline and the checklist readable over a photo */
+.prod-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--prod-scrim-edge),var(--prod-scrim-mid) 26%,
+    var(--prod-scrim-mid) 74%,var(--prod-scrim-edge))}
+.prod-in{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.prod-bg i{transition:none}}
 
 /* ---------- production (full bleed) ---------- */
 .prod{background:var(--steel);color:#fff}
@@ -970,6 +984,13 @@ body.cart-open .fab-menu{display:none!important}
 </section>
 
 <section class="prod" id="production">
+  <div class="prod-bg" aria-hidden="true">
+    <i data-src="assets/bg1.webp"></i>
+    <i data-src="assets/bg2.webp"></i>
+    <i data-src="assets/bg3.webp"></i>
+    <i data-src="assets/bg4.webp"></i>
+    <i data-src="assets/bg5.webp"></i>
+  </div>
   <div class="wrap prod-in">
     <div>
       <h2>Собственное производство в городе Магнитогорск</h2>
@@ -2216,6 +2237,57 @@ body.cart-open .fab-menu{display:none!important}
       g.classList.add('flash');
     });
   });
+})();
+
+// the stills load only once the block is reached, and stop cycling when it
+// leaves the screen, so the rest of the page pays nothing for them
+(function(){
+  var band = document.querySelector('.prod-bg');
+  var host = document.getElementById('production');
+  if (!band || !host) return;
+  var layers = [].slice.call(band.querySelectorAll('i'));
+  if (!layers.length) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var loaded = false, timer = null, at = 0;
+
+  var load = function(){
+    if (loaded) return;
+    loaded = true;
+    layers.forEach(function(el){
+      var src = el.getAttribute('data-src');
+      if (src) el.style.backgroundImage = 'url("' + src + '")';
+    });
+    layers[0].classList.add('on');
+  };
+  var step = function(){
+    layers[at].classList.remove('on');
+    at = (at + 1) % layers.length;
+    layers[at].classList.add('on');
+  };
+  var start = function(){
+    if (timer || reduce.matches || layers.length < 2) return;
+    timer = setInterval(step, 6500);
+  };
+  var stop = function(){ if (timer) { clearInterval(timer); timer = null; } };
+
+  if (!('IntersectionObserver' in window)) { load(); start(); return; }
+  var io = new IntersectionObserver(function(en){
+    if (en[0].isIntersecting) { load(); start(); } else { stop(); }
+  }, { threshold: 0.04 });
+  io.observe(host);
+  var near = function(){
+    var r = host.getBoundingClientRect();
+    return r.top < window.innerHeight * 1.2 && r.bottom > 0;
+  };
+  if (near()) { load(); start(); }
+  // a blank band would be a silent failure, so scrolling checks as well
+  var onScroll = function(){
+    if (!near()) return;
+    load(); start();
+    window.removeEventListener('scroll', onScroll);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
 })();
 
 // the RuTube player is heavy, so each clip stays a poster until it is pressed
