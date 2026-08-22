@@ -1,0 +1,32 @@
+{
+  "name": "ТД Флагман — профиль и крепёж",
+  "short_name": "Флагман",
+  "description": "Производство профиля и крепежа для гипсокартона в Магнитогорске, склад стройматериалов.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "ru",
+  "background_color": "#0f151f",
+  "theme_color": "#0f151f",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

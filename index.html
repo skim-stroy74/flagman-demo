@@ -157,6 +157,15 @@ p{margin:0}
   --prod-scrim-edge:rgba(214,221,226,.90);--prod-scrim-mid:rgba(214,221,226,.74);
 }
 [data-theme="soft"] .tinted{background:var(--steel);border-color:var(--line)}
+/* the partner marks are white silhouettes with an alpha channel: inverting
+   turns them black and keeps every edge, so no second set of files is needed */
+[data-theme="soft"] .logo-row img{filter:invert(1);opacity:.78}
+[data-theme="soft"] .logo-row img:hover{opacity:1}
+/* a dark photo over a light page only greys it. Flattening the still first
+   lets it be raised until the texture actually shows, without dimming the text */
+[data-theme="soft"] .sec-bg i{filter:contrast(.35) brightness(1.35)}
+[data-theme="soft"] .prod-bg i{filter:contrast(.4) brightness(1.3)}
+[data-theme="soft"] .prod-bg i.on{opacity:.34}
 
 /* top strip and header */
 [data-theme="soft"] .demo-bar{background:var(--steel);border-bottom-color:var(--line);color:var(--ink-3)}
@@ -360,7 +369,7 @@ p{margin:0}
 .sec-bg i{position:absolute;inset:0;background-size:cover;background-position:center;
   opacity:0;transition:opacity 1.2s ease;transform:scale(1.04)}
 .sec-bg i.on{opacity:.14}
-[data-theme="soft"] .sec-bg i.on{opacity:.10}
+[data-theme="soft"] .sec-bg i.on{opacity:.32}
 .sec-bg::after{content:'';position:absolute;inset:0;
   background:linear-gradient(180deg,var(--prod-scrim-edge),var(--prod-scrim-mid) 30%,
     var(--prod-scrim-mid) 70%,var(--prod-scrim-edge))}
@@ -475,6 +484,29 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}
   .stat-l{font-size:14px}
 }
+
+/* ---------- offer to keep the site on the home screen ----------------
+   Phones only, shown once, and never while the request basket is up: two
+   bars stacked at the bottom edge is one bar too many.
+   -------------------------------------------------------------------- */
+.pwa{display:none;position:fixed;left:0;right:0;z-index:55;
+  bottom:calc(82px + env(safe-area-inset-bottom));
+  align-items:center;gap:12px;padding:11px var(--pad);
+  background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  box-shadow:0 -6px 18px rgba(0,0,0,.28)}
+.pwa.show{display:flex}
+body.cart-on .pwa{display:none!important}
+.pwa-ic{width:38px;height:38px;flex-shrink:0;border-radius:9px;object-fit:cover}
+[data-theme="soft"] .pwa{box-shadow:0 -6px 18px rgba(35,45,55,.12)}
+.pwa-t{flex:1;min-width:0;line-height:1.25}
+.pwa-t b{display:block;font-size:14.5px;font-weight:650}
+.pwa-t span{display:block;font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.pwa .btn{padding:10px 16px;font-size:14.5px;flex-shrink:0}
+.pwa-x{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:none;
+  border:1px solid var(--line);color:var(--ink-3);font-size:17px;line-height:1;
+  cursor:pointer;font-family:inherit}
+.pwa-x:hover{color:var(--ink)}
+@media(min-width:821px){.pwa{display:none!important}}
 
 /* ---------- request basket ---------- */
 .pcard-img{position:relative}
@@ -661,7 +693,7 @@ body.cart-open .fab-menu{display:none!important}
 .logos-in h2{font-size:clamp(19px,2vw,22px);margin-bottom:30px;color:var(--ink-2)}
 .logo-row{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(26px,4vw,58px)}
 /* marks are already flattened to white silhouettes at build time */
-.logo-row img{height:clamp(28px,3.2vw,40px);width:auto;opacity:.72;transition:opacity .2s}
+.logo-row img{height:clamp(28px,3.2vw,40px);width:auto;opacity:.88;transition:opacity .2s,filter .2s}
 .logo-row img:hover{opacity:1}
 
 /* ---------- contact ---------- */
@@ -820,6 +852,10 @@ body.cart-open .fab-menu{display:none!important}
   }catch(e){}
 })();
 </script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<meta name="theme-color" content="#0f151f">
+<meta name="apple-mobile-web-app-title" content="Флагман">
 </head>
 <body>
 
@@ -1968,6 +2004,16 @@ body.cart-open .fab-menu{display:none!important}
   <div class="lb-count" id="lb-count"></div>
 </div>
 
+<div class="pwa" id="pwa">
+  <img class="pwa-ic" src="assets/icon-192.png" alt="" loading="lazy">
+  <div class="pwa-t">
+    <b>Флагман на телефоне</b>
+    <span id="pwa-sub">Каталог и заявка — с рабочего стола</span>
+  </div>
+  <button class="btn btn-p" type="button" id="pwa-go">Установить</button>
+  <button class="pwa-x" type="button" id="pwa-x" aria-label="Скрыть предложение">&#215;</button>
+</div>
+
 <div class="cart" id="cart" aria-live="polite">
   <div class="wrap cart-in">
     <ul class="cart-list" id="cart-list"></ul>
@@ -2433,6 +2479,59 @@ body.cart-open .fab-menu{display:none!important}
       g.classList.add('flash');
     });
   });
+})();
+
+// add-to-home-screen offer. Chrome hands us the prompt, iOS never does,
+// so there the same bar explains the two taps instead.
+(function(){
+  var bar = document.getElementById('pwa');
+  if (!bar) return;
+  var go = document.getElementById('pwa-go');
+  var sub = document.getElementById('pwa-sub');
+  var KEY = 'flagman-pwa-hidden';
+
+  var hidden = false;
+  try { hidden = localStorage.getItem(KEY) === '1'; } catch (e) {}
+  var standalone = window.matchMedia('(display-mode: standalone)').matches ||
+                   window.navigator.standalone === true;
+  if (hidden || standalone) return;
+
+  // the service worker is what makes the site installable at all, and it
+  // only registers over https - on plain http the browser refuses
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  }
+
+  var later = function(){
+    bar.classList.remove('show');
+    try { localStorage.setItem(KEY, '1'); } catch (e) {}
+  };
+  document.getElementById('pwa-x').addEventListener('click', later);
+
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferred = e;
+    bar.classList.add('show');
+  });
+
+  go.addEventListener('click', function(){
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function(){ later(); });
+    deferred = null;
+  });
+
+  window.addEventListener('appinstalled', later);
+
+  // iOS gives no prompt event: show the manual route instead
+  var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (iOS) {
+    sub.textContent = 'Поделиться → «На экран Домой»';
+    go.hidden = true;
+    setTimeout(function(){ bar.classList.add('show'); }, 2500);
+  }
 })();
 
 // theme switch: the choice is the visitor's and it sticks
