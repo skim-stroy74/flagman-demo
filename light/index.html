@@ -126,6 +126,90 @@ p{margin:0}
 [data-theme="light"] .sec .form-note{color:#1f7a45}
 [data-theme="light"] .sec .pcard-img{background:#ffffff}
 
+/* ---------- soft build -----------------------------------------------
+   One light range over the whole page: no navy bands, no pure white sheets.
+   The tones are borrowed from the material itself - galvanised zinc and
+   cement - so panels differ from the page by a step, not by a jump. Every
+   rule below exists because the original hard-codes a dark colour that has
+   no token to follow.
+   -------------------------------------------------------------------- */
+:root[data-theme="soft"]{
+  color-scheme:light;
+  --ink:#232c35;--ink-2:#4c5964;--ink-3:#576270;
+  --line:#ccd4da;--line-2:#dae0e5;
+  --bg:#e8ecef;--bg-2:#f5f7f8;
+  --steel:#dde3e7;--steel-2:#d3dae0;
+  --accent:#2a6491;--accent-dark:#1f4f76;--accent-soft:#dce7f0;--accent-on-dark:#2a6491;
+  --btn-ink:#ffffff;
+  --prod-scrim-edge:rgba(214,221,226,.90);--prod-scrim-mid:rgba(214,221,226,.74);
+}
+[data-theme="soft"] .tinted{background:var(--steel);border-color:var(--line)}
+
+/* top strip and header */
+[data-theme="soft"] .demo-bar{background:var(--steel);border-bottom-color:var(--line);color:var(--ink-3)}
+[data-theme="soft"] .hdr{background:rgba(232,236,239,.92)}
+[data-theme="soft"] .fab-menu{background:rgba(245,247,248,.95);border-color:var(--line);
+  box-shadow:0 6px 18px rgba(35,45,55,.18)}
+[data-theme="soft"] .mbar{background:rgba(245,247,248,.97)}
+@media(max-width:900px){[data-theme="soft"] .mbar{background:#f5f7f8}}
+
+/* buttons and cards */
+[data-theme="soft"] .btn-s{border-color:var(--line)}
+[data-theme="soft"] .btn-s:hover{border-color:var(--ink-3)}
+[data-theme="soft"] .btn-g{color:var(--ink);border-color:var(--line)}
+[data-theme="soft"] .btn-g:hover{background:rgba(35,45,55,.06);border-color:var(--ink-3)}
+[data-theme="soft"] .card{box-shadow:0 1px 2px rgba(35,45,55,.07)}
+[data-theme="soft"] .card:hover{border-color:#b3bfc9;box-shadow:0 8px 24px rgba(35,45,55,.10)}
+[data-theme="soft"] .pcard:hover{border-color:var(--accent)}
+[data-theme="soft"] table.sizes tbody tr:nth-child(even){background:#eef1f4}
+
+/* the production block loses its dark ground, so the stills sit under a pale wash */
+[data-theme="soft"] .prod{background:#d6dde2;color:var(--ink)}
+[data-theme="soft"] .prod p{color:var(--ink-2)}
+[data-theme="soft"] .prod-list li{color:var(--ink)}
+[data-theme="soft"] .prod-bg i.on{opacity:.16}
+[data-theme="soft"] .shots button{border-color:var(--line)}
+[data-theme="soft"] .shots button:hover{border-color:var(--accent)}
+[data-theme="soft"] .shots-note,[data-theme="soft"] .vids-note{color:var(--ink-3)}
+[data-theme="soft"] .vid{border-color:var(--line);background:var(--steel-2)}
+[data-theme="soft"] .vid:hover{border-color:var(--accent)}
+
+/* form controls were dark fields */
+[data-theme="soft"] .calc-f input,[data-theme="soft"] .calc-f select,
+[data-theme="soft"] .fld input,[data-theme="soft"] .fld textarea{
+  background:#ffffff;border-color:var(--line);color:var(--ink)}
+[data-theme="soft"] .fld input::placeholder,
+[data-theme="soft"] .fld textarea::placeholder{color:var(--ink-3)}
+[data-theme="soft"] .form-note{color:#1f7a45}
+
+/* the map was drawn for a dark ground: every stroke and label flips */
+[data-theme="soft"] .geo{background:var(--steel);color:var(--ink)}
+[data-theme="soft"] .geo h2{color:var(--ink)}
+[data-theme="soft"] .geo .geo-lead{color:var(--ink-2)}
+[data-theme="soft"] .geo-map .ray{stroke:#a3b0bb}
+[data-theme="soft"] .geo-map .dot{fill:var(--accent)}
+[data-theme="soft"] .geo-map .lbl{fill:var(--ink-2)}
+[data-theme="soft"] .geo-map .hub{fill:var(--ink)}
+[data-theme="soft"] .geo-map .hub-lbl{fill:var(--ink)}
+[data-theme="soft"] .geo-map .hub-sub{fill:var(--accent)}
+[data-theme="soft"] .geo-map .pulse{fill:var(--accent)}
+[data-theme="soft"] .geo-list div{border-color:var(--line);color:var(--ink-2)}
+[data-theme="soft"] .geo-list div.hub{color:var(--ink)}
+[data-theme="soft"] .geo-note{color:var(--ink-3)}
+
+/* request basket rides the bottom edge and has to match the page now */
+[data-theme="soft"] .cart{background:rgba(245,247,248,.97);border-top-color:var(--line)}
+[data-theme="soft"] .cart-x{border-color:var(--line)}
+@media(max-width:640px){[data-theme="soft"] .hdr-tel{border-color:var(--line)}}
+[data-theme="soft"] .modal{background:rgba(35,45,55,.55)}
+
+/* footer keeps a step of separation without going dark */
+[data-theme="soft"] .ft{background:var(--steel);color:var(--ink-2)}
+[data-theme="soft"] .ft-brand{color:var(--ink)}
+[data-theme="soft"] .ft-nav a:hover{color:var(--ink)}
+[data-theme="soft"] .ft-bot{border-top-color:var(--line);color:var(--ink-3)}
+[data-theme="soft"] .ft-bot a{color:var(--ink-3)}
+
 /* ---------- demo notice ---------- */
 .demo-bar{background:#16202c;border-bottom:1px solid #2b3648;color:#95a3b6;font-size:13.5px;line-height:1.45;padding:9px 0}
 .demo-bar b{font-weight:600}
@@ -1844,7 +1928,7 @@ body.cart-open .fab-menu{display:none!important}
         <a href="#terms">Оплата и доставка</a>
         <a href="#contacts">Контакты</a>
       </nav>
-      <a class="hdr-tel" style="color:#fff;border:0;width:auto;height:auto;justify-content:flex-start;gap:8px;padding:9px 0" href="tel:+79681163721"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></svg><span>+7 (968) 116-37-21</span></a>
+      <a class="hdr-tel" style="color:var(--ink);border:0;width:auto;height:auto;justify-content:flex-start;gap:8px;padding:9px 0" href="tel:+79681163721"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></svg><span>+7 (968) 116-37-21</span></a>
     </div>
     <div class="ft-bot">
       <span>© 2026 ООО «ТД Флагман». Профиль и крепёж для гипсокартона от производителя.</span>
