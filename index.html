@@ -264,6 +264,31 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
 .lb-count{position:absolute;bottom:clamp(12px,2.5vw,28px);left:50%;transform:translateX(-50%);
   font-size:14px;color:#9fb0c6;background:rgba(15,21,31,.8);padding:6px 14px;border-radius:999px}
 
+/* ---------- workshop clips: poster until pressed, then the RuTube player ---------- */
+.vids{margin-top:clamp(22px,2.8vw,32px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(12px,1.4vw,18px);max-width:800px;margin-left:auto;margin-right:auto}
+.vid{position:relative;padding:0;border:1px solid #33465e;border-radius:var(--r);overflow:hidden;
+  background:#0d1219;cursor:pointer;display:block;aspect-ratio:9/16;transition:border-color .18s,transform .12s}
+.vid:hover{border-color:#5b9ad9;transform:translateY(-2px)}
+.vid>img{width:100%;height:100%;object-fit:cover;display:block}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;
+  border-radius:50%;background:rgba(15,21,31,.72);border:1px solid rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:center;transition:background .18s}
+.vid-play::after{content:'';margin-left:4px;border-style:solid;border-width:11px 0 11px 18px;
+  border-color:transparent transparent transparent #fff}
+.vid:hover .vid-play{background:var(--accent)}
+.vid-cap{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 11px;font-size:13.5px;color:#fff;
+  text-align:left;background:linear-gradient(to top,rgba(8,12,18,.92),rgba(8,12,18,0))}
+.vids-note{margin-top:12px;font-size:14px;color:#8ea0b6}
+@media(max-width:640px){
+  /* vertical clips shrink to nothing in a 3-up grid, so they swipe instead */
+  .vids{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;gap:12px;max-width:none;padding-bottom:4px}
+  .vid{flex:0 0 62%;scroll-snap-align:center}
+  .vid-play{width:48px;height:48px}
+}
+
 /* ---------- figures that count up on scroll ---------- */
 .stats-band{background:var(--bg)}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(18px,3vw,40px);
@@ -910,6 +935,25 @@ body.cart-open .fab-menu{display:none!important}
         <button type="button" data-shot="4"><img src="assets/ceh5_t.webp" alt="Цех ТД Флагман, фото 5" loading="lazy"></button>
       </div>
       <p class="shots-note">Нажмите на фото, чтобы рассмотреть. Листается стрелками и свайпом.</p>
+
+      <div class="vids">
+      <button class="vid" type="button" data-rt="40dd478f9863dd352d4ab528bc87f609" data-p="ffbGyXjo10m6IojLk0Rrdg" aria-label="Смотреть видео: Готовый профиль на выходе стана">
+        <img src="assets/vid1.webp" alt="Готовый профиль на выходе стана — цех ТД Флагман" loading="lazy">
+        <span class="vid-play" aria-hidden="true"></span>
+        <span class="vid-cap">Готовый профиль на выходе стана</span>
+      </button>
+      <button class="vid" type="button" data-rt="ae11135646008bc608ebe2682e81bf33" data-p="eWwAXaocrkD4XVzmpsoa9A" aria-label="Смотреть видео: Прокатный стан в работе">
+        <img src="assets/vid2.webp" alt="Прокатный стан в работе — цех ТД Флагман" loading="lazy">
+        <span class="vid-play" aria-hidden="true"></span>
+        <span class="vid-cap">Прокатный стан в работе</span>
+      </button>
+      <button class="vid" type="button" data-rt="d9664f4077fca2f58f9bc8e4183e8c62" data-p="1dBd52DlLp4o8azNOXeUlQ" aria-label="Смотреть видео: Линия перфорированного крепежа">
+        <img src="assets/vid3.webp" alt="Линия перфорированного крепежа — цех ТД Флагман" loading="lazy">
+        <span class="vid-play" aria-hidden="true"></span>
+        <span class="vid-cap">Линия перфорированного крепежа</span>
+      </button>
+      </div>
+      <p class="vids-note">Съёмка в цехе на Комсомольской, 127/1. Видео включается по нажатию.</p>
     </div>
   </div>
 </section>
@@ -1998,6 +2042,25 @@ body.cart-open .fab-menu{display:none!important}
       g.classList.remove('flash');
       void g.offsetWidth;
       g.classList.add('flash');
+    });
+  });
+})();
+
+// the RuTube player is heavy, so each clip stays a poster until it is pressed
+(function(){
+  document.querySelectorAll('.vid').forEach(function(el){
+    el.addEventListener('click', function(){
+      if (el.querySelector('iframe')) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://rutube.ru/play/embed/' + el.getAttribute('data-rt') +
+              '/?p=' + el.getAttribute('data-p') + '&autoStart=true';
+      f.setAttribute('allow', 'clipboard-write; autoplay; fullscreen');
+      f.setAttribute('title', el.getAttribute('aria-label') || 'Видео из цеха');
+      // a button may not contain an iframe, so the whole tile is swapped out
+      var box = document.createElement('div');
+      box.className = 'vid';
+      box.appendChild(f);
+      el.replaceWith(box);
     });
   });
 })();
