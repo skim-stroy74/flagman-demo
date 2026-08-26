@@ -133,6 +133,9 @@ p{margin:0}
 /* the partner marks are white silhouettes with an alpha channel: inverting
    turns them black and keeps every edge, so no second set of files is needed */
 [data-theme="soft"] .logo-row img{filter:invert(1);opacity:.78}
+/* the mark is a white silhouette with an alpha channel: inverting turns it
+   black and keeps every edge, so the light theme needs no second file */
+[data-theme="soft"] .brand img,[data-theme="soft"] .ft-brand img{filter:invert(1)}
 [data-theme="soft"] .logo-row img:hover{opacity:1}
 /* a dark photo over a light page only greys it. Flattening the still first
    lets it be raised until the texture actually shows, without dimming the text */
