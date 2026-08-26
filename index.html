@@ -709,6 +709,9 @@ body.cart-open .fab-menu{display:none!important}
 .consent a{color:var(--accent)}
 .form .btn{margin-top:20px;width:100%}
 .form-note{margin-top:14px;font-size:15px;color:#7fd39a}
+.form-fail{margin-top:14px;font-size:15px;color:#e2896f}
+.form-fail a{color:inherit;font-weight:600}
+[data-theme="soft"] .form-fail{color:#b4442a}
 .ct-info h2{font-size:clamp(22px,2.5vw,29px);margin-bottom:22px}
 .ct-item{display:flex;gap:13px;padding:16px 0;border-top:1px solid var(--line-2)}
 .ct-item:first-of-type{border-top:0;padding-top:0}
@@ -1944,6 +1947,7 @@ window.addEventListener('pageshow', function(e){
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <button class="btn btn-p" type="submit">Отправить запрос</button>
       <p class="form-note" hidden>Заявка отправлена. Перезвоним в течение рабочего дня.</p>
+      <p class="form-fail" id="form-fail" hidden>Не получилось отправить. Позвоните нам: <a href="tel:+79681163721">+7 (968) 116-37-21</a> или <a href="tel:+73519581437">58-14-37</a>.</p>
     </form>
 
     <div class="ct-info">
@@ -2539,6 +2543,57 @@ window.addEventListener('pageshow', function(e){
   });
 })();
 
+// The form used to post straight to formsubmit, which threw the visitor onto
+// a third-party English thank-you page - it reads as a failure and people give
+// up there. Send it in the background instead and answer on our own page.
+(function(){
+  var form = document.getElementById('request');
+  if (!form || !window.fetch || !window.FormData) return;   // no JS: plain post still works
+  var ok = form.querySelector('.form-note');
+  var fail = document.getElementById('form-fail');
+  var btn = form.querySelector('button[type="submit"]');
+  var label = btn ? btn.textContent : '';
+  var busy = false;
+
+  // one source of truth for the address: the form's own action
+  var endpoint = form.getAttribute('action').replace('formsubmit.co/', 'formsubmit.co/ajax/');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (busy) return;
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    busy = true;
+    ok.hidden = true;
+    fail.hidden = true;
+    if (btn) { btn.disabled = true; btn.textContent = 'Отправляем…'; }
+
+    var done = function(good){
+      busy = false;
+      if (btn) { btn.disabled = false; btn.textContent = label; }
+      if (good) {
+        ok.hidden = false;
+        form.reset();
+        try { sessionStorage.removeItem('flagman-cart'); } catch (err) {}
+        ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        fail.hidden = false;
+      }
+    };
+
+    var guard = setTimeout(function(){ done(false); }, 15000);
+
+    fetch(endpoint, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(function(r){ return r.ok ? r.json().catch(function(){ return {}; }) : Promise.reject(r.status); })
+      .then(function(){ clearTimeout(guard); done(true); })
+      .catch(function(){ clearTimeout(guard); done(false); });
+  });
+})();
+
 // theme switch: the choice is the visitor's and it sticks
 (function(){
   var btn = document.getElementById('theme-t');
@@ -2821,10 +2876,7 @@ window.addEventListener('pageshow', function(e){
     }, 500);
   });
 
-  var form = document.getElementById('request');
-  if (form) form.addEventListener('submit', function(){
-    try { sessionStorage.removeItem(KEY); } catch (e) {}
-  });
+  // the basket is cleared by the sender once the request actually goes through
 
   picked.forEach(function(n){ mark(n, true); });
   draw(false);
