@@ -80,52 +80,6 @@ h1,h2,h3{margin:0;line-height:1.12;letter-spacing:-0.02em;font-weight:700}
 p{margin:0}
 .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
 
-/* ---------- light build ----------------------------------------------
-   Only the middle of the page turns light. The header, the first screen,
-   the production block, the map and the footer stay dark on purpose, so the
-   page reads as alternating bands instead of one flat sheet. Tokens are
-   redefined on the light containers, so everything inside follows along
-   while the dark bands keep the original palette.
-   -------------------------------------------------------------------- */
-[data-theme="light"]{color-scheme:light;--page:#f2f5f8}
-[data-theme="light"] body{background:var(--page);color:#16202b}
-/* body now carries dark text, so every band that stayed dark has to say so
-   again — otherwise anything inheriting colour there goes dark on dark */
-[data-theme="light"] .hdr,[data-theme="light"] .hero,[data-theme="light"] .facts,
-[data-theme="light"] .demo-bar,[data-theme="light"] .cart,[data-theme="light"] .mbar,
-[data-theme="light"] .lb,[data-theme="light"] .modal,[data-theme="light"] .nav-drop{color:var(--ink)}
-/* first screen and the strip under it stay dark with the machine */
-[data-theme="light"] .hero,[data-theme="light"] .facts{background:var(--bg)}
-
-[data-theme="light"] .sec,[data-theme="light"] .stats-band{
-  --ink:#16202b;--ink-2:#41505f;--ink-3:#58677a;
-  --line:#dbe2ea;--line-2:#e7ecf2;
-  --bg:#f2f5f8;--bg-2:#ffffff;
-  --accent:#1662c2;--accent-dark:#0f4e9e;--accent-soft:#e6eefa;--accent-on-dark:#1662c2;
-  --btn-ink:#ffffff;
-  color:var(--ink);
-}
-[data-theme="light"] .tinted{background:#e9eef4;border-color:#dbe2ea}
-[data-theme="light"] .sec h1,[data-theme="light"] .sec h2,
-[data-theme="light"] .sec h3,[data-theme="light"] .sec h4{color:var(--ink)}
-
-/* panels and cards: white on a grey page, so a soft shadow replaces the dark border */
-[data-theme="light"] .sec .card{box-shadow:0 1px 2px rgba(22,32,43,.06)}
-[data-theme="light"] .sec .card:hover{border-color:#b9c6d6;box-shadow:0 8px 24px rgba(22,32,43,.10)}
-[data-theme="light"] .sec .pcard:hover{border-color:var(--accent)}
-[data-theme="light"] .sec .btn-s{border-color:#cbd5e1}
-[data-theme="light"] .sec .btn-s:hover{border-color:#8c9bad}
-
-/* form controls were dark fields; on a light card they have to invert */
-[data-theme="light"] .sec .calc-f input,[data-theme="light"] .sec .calc-f select,
-[data-theme="light"] .sec .fld input,[data-theme="light"] .sec .fld textarea{
-  background:#ffffff;border-color:#cbd5e1;color:#16202b}
-[data-theme="light"] .sec .fld input::placeholder,
-[data-theme="light"] .sec .fld textarea::placeholder{color:#8593a3}
-[data-theme="light"] .sec table.sizes tbody tr:nth-child(even){background:#f4f7fa}
-[data-theme="light"] .sec .form-note{color:#1f7a45}
-[data-theme="light"] .sec .pcard-img{background:#ffffff}
-
 /* ---------- install button ----------------------------------------
    Shown only once the browser says the site can actually be installed, so
    nobody is offered a button that would do nothing. iOS never says so: there
@@ -372,10 +326,6 @@ p{margin:0}
 
 /* ---------- wide offer ---------- */
 .offer{margin-top:clamp(14px,1.6vw,22px);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg-2)}
-.offer-b{padding:clamp(24px,3.4vw,42px);display:flex;flex-direction:column;justify-content:center}
-.offer-b h3{font-size:clamp(21px,2.4vw,27px)}
-.offer-b p{margin-top:13px;color:var(--ink-2);font-size:16.5px;max-width:52ch}
-.offer-b .btn{margin-top:24px;align-self:flex-start}
 
 /* ---------- a photo behind each section -------------------------------
    Same idea as the production block, but one still per section instead of a
@@ -414,8 +364,7 @@ p{margin:0}
 .prod p{margin-top:14px;color:#b8bfc9;font-size:15px;max-width:56ch}
 /* two columns of claims, so the block keeps its width without a photo */
 .prod-list{margin:26px 0 0;padding:0;list-style:none;display:grid;gap:13px}
-.prod-media{border-radius:var(--r);overflow:hidden}
-.prod-media img{width:100%;aspect-ratio:4/3;object-fit:cover}
+
 .prod-list li{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:#e4e8ee}
 .prod-list svg{width:19px;height:19px;fill:var(--accent-on-dark);flex-shrink:0;margin-top:2px}
 .prod .btn{margin-top:32px}
@@ -513,8 +462,6 @@ table.sizes .dim{font-variant-numeric:tabular-nums;white-space:nowrap}
   background-size:17px;background-position:center;background-repeat:no-repeat;
   box-shadow:0 2px 8px rgba(0,0,0,.35)}
 .card.rv.picked{border-color:var(--accent)}
-.spec-list a.picked{color:var(--accent)}
-.spec-list a.picked .pk::after{content:' \2713'}
 
 .cart{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(15,21,31,.97);
   backdrop-filter:blur(10px);border-top:1px solid var(--line);
@@ -554,13 +501,7 @@ body.cart-open .fab-menu{display:none!important}
 }
 
 /* ---------- own-production spec lists ---------- */
-.spec-list{padding:0 0 22px;margin:0;list-style:none;display:grid}
-.spec-list a{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
-  padding:12px 2px;border-top:1px solid var(--line-2);text-decoration:none;transition:color .18s}
-.spec-list li:first-child a{border-top:0}
-.spec-list a:hover{color:var(--accent)}
-.spec-list .nm{font-size:15.5px}
-.spec-list .pk{font-size:13.5px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
+
 .spec-note{padding:0 0 20px;font-size:13.5px;color:var(--ink-3)}
 .mat-g.flash{animation:groupFlash 1.4s ease-out}
 @keyframes groupFlash{0%{background:rgba(91,154,217,.16)}100%{background:transparent}}
@@ -625,7 +566,6 @@ body.cart-open .fab-menu{display:none!important}
 .calc-empty{padding:30px 20px;text-align:center;color:var(--ink-3);font-size:15.5px}
 .calc-note{margin-top:14px;font-size:13.5px;color:var(--ink-3);line-height:1.5}
 .calc-actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
-
 
 /* ---------- map ---------- */
 .map-wrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg-2)}
@@ -874,7 +814,7 @@ window.addEventListener('pageshow', function(e){
 </head>
 <body>
 
-<div class="demo-bar"><div class="wrap">Ассортимент и фотографии дополняются. Наличие и цены уточняйте по телефону.</div></div>
+<div class="demo-bar"><div class="wrap">Наличие и цены уточняйте по телефону — отгружаем со склада в Магнитогорске.</div></div>
 
 <header class="hdr">
   <div class="wrap hdr-in">
@@ -903,7 +843,6 @@ window.addEventListener('pageshow', function(e){
 </header>
 
 <button class="fab-menu" type="button" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
-
 
 <main id="top">
 
@@ -943,7 +882,7 @@ window.addEventListener('pageshow', function(e){
 
     <div class="cat">
       <a class="card rv" href="#g-profil" data-group="g-profil">
-        <div class="card-img"><img src="assets/p_profil.webp" alt="Профиль для гипсокартона ПН, ПС, ПП"></div>
+        <div class="card-img"><img loading="lazy" src="assets/p_profil.webp" alt="Профиль для гипсокартона ПН, ПС, ПП"></div>
         <div class="card-b">
           <h3>Профиль для гипсокартона</h3>
           <p class="card-spec">ПН, ПС, ПП, ПНП. Все типоразмеры.<br>Длина 3000 мм, толщина 0,4-0,6 мм.</p>
@@ -952,7 +891,7 @@ window.addEventListener('pageshow', function(e){
       </a>
 
       <a class="card rv" href="#g-podves" data-group="g-podves">
-        <div class="card-img"><img src="assets/p_podves.webp" alt="Подвесы и соединители для профиля"></div>
+        <div class="card-img"><img loading="lazy" src="assets/p_podves.webp" alt="Подвесы и соединители для профиля"></div>
         <div class="card-b">
           <h3>Подвесы и соединители</h3>
           <p class="card-spec">Прямой подвес, краб, европодвес,<br>соединитель одноуровневый.</p>
@@ -961,7 +900,7 @@ window.addEventListener('pageshow', function(e){
       </a>
 
       <a class="card rv" href="#g-ugol" data-group="g-ugol">
-        <div class="card-img"><img src="assets/p_ugol.webp" alt="Перфоуголок и маячковый профиль"></div>
+        <div class="card-img"><img loading="lazy" src="assets/p_ugol.webp" alt="Перфоуголок и маячковый профиль"></div>
         <div class="card-b">
           <h3>Перфоуголок и маячки</h3>
           <p class="card-spec">Уголок 20×20, 25×25, 31×31, УС 35×35 мм.<br>Маяк 6 и 10 мм.</p>
@@ -970,7 +909,7 @@ window.addEventListener('pageshow', function(e){
       </a>
 
       <a class="card rv" href="#request" data-item="Крепёж для подвесных потолков">
-        <div class="card-img"><img src="assets/p_potolki.webp" alt="Крепёж для подвесных потолков"></div>
+        <div class="card-img"><img loading="lazy" src="assets/p_potolki.webp" alt="Крепёж для подвесных потолков"></div>
         <div class="card-b">
           <h3>Крепёж для подвесных потолков</h3>
           <p class="card-spec">Тяга с ушком, пружина-бабочка,<br>анкер-клин, подвес регулируемый.</p>
@@ -979,7 +918,7 @@ window.addEventListener('pageshow', function(e){
       </a>
 
       <a class="card rv" href="#request" data-item="Перфолента монтажная">
-        <div class="card-img"><img src="assets/p_lenta.webp" alt="Перфолента монтажная оцинкованная"></div>
+        <div class="card-img"><img loading="lazy" src="assets/p_lenta.webp" alt="Перфолента монтажная оцинкованная"></div>
         <div class="card-b">
           <h3>Перфолента монтажная</h3>
           <p class="card-spec">Ширина 12 и 17 мм, толщина 0,55 мм.<br>Бухта 25 м, оцинкованная сталь.</p>
@@ -988,7 +927,7 @@ window.addEventListener('pageshow', function(e){
       </a>
 
       <a class="card rv" href="#request" data-item="Перфорированный крепёж">
-        <div class="card-img"><img src="assets/p_krep.webp" alt="Перфорированный крепёж, уголки и пластины"></div>
+        <div class="card-img"><img loading="lazy" src="assets/p_krep.webp" alt="Перфорированный крепёж, уголки и пластины"></div>
         <div class="card-b">
           <h3>Перфорированный крепёж</h3>
           <p class="card-spec">Уголки монтажные, пластины,<br>держатели балок, опоры бруса.</p>
@@ -996,7 +935,6 @@ window.addEventListener('pageshow', function(e){
         </div>
       </a>
     </div>
-
 
     <div class="also">
       <h3>Также производим</h3>
@@ -1824,14 +1762,14 @@ window.addEventListener('pageshow', function(e){
     <div class="logos-in">
       <h2>С кем мы работаем</h2>
       <div class="logo-row">
-        <img src="assets/l_mmk.png" alt="ММК">
-        <img src="assets/l_knauf.png" alt="KNAUF">
-        <img src="assets/l_mzm.png" alt="МЗМ">
-        <img src="assets/l_umk.png" alt="УМК">
-        <img src="assets/l_tsk.png" alt="ТСК">
-        <img src="assets/l_ausbau.png" alt="Ausbau">
-        <img src="assets/l_baza.png" alt="Стройбаза №1">
-        <img src="assets/l_arkada.png" alt="Аркада">
+        <img loading="lazy" src="assets/l_mmk.png" alt="ММК">
+        <img loading="lazy" src="assets/l_knauf.png" alt="KNAUF">
+        <img loading="lazy" src="assets/l_mzm.png" alt="МЗМ">
+        <img loading="lazy" src="assets/l_umk.png" alt="УМК">
+        <img loading="lazy" src="assets/l_tsk.png" alt="ТСК">
+        <img loading="lazy" src="assets/l_ausbau.png" alt="Ausbau">
+        <img loading="lazy" src="assets/l_baza.png" alt="Стройбаза №1">
+        <img loading="lazy" src="assets/l_arkada.png" alt="Аркада">
       </div>
     </div>
   </div>
