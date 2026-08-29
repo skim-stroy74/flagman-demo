@@ -279,7 +279,7 @@ p{margin:0}
 /* the line runs wider than its column and off the right edge, so it reads big */
 .mach{position:relative;width:149%;margin-right:-49%}
 .mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
-.mach-rail{position:absolute;z-index:1;left:-3.61%;top:49.62%;width:15.15%;height:auto;display:block}
+.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
 
 @media (prefers-reduced-motion:no-preference){
   /* parked under the machine until the block is on screen, otherwise on phones
@@ -796,9 +796,6 @@ body.cart-open .fab-menu{display:none!important}
 }
 @media(max-width:392px){.brand-t span{display:none}}
 @media(max-width:344px){.brand-t{display:none}}
-/* wide screens: the picture runs to the window edge and the machine grows with
-   it, so the emerging profile has to tuck in or it reaches the headline */
-@media(min-width:1241px){.mach-rail{left:-2.1%}}
 </style>
 <script>
 /* runs before anything is drawn: the theme must be settled before the first
