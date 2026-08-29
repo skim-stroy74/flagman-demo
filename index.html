@@ -266,7 +266,7 @@ p{margin:0}
 /* cut-out profile sits straight on the page, no plate behind it.
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
-.hero-img{position:relative;padding:8px 0;min-width:0;cursor:pointer}
+.hero-img{position:relative;padding:8px 0;min-width:0}
 /* on wide screens the picture runs to the edge of the window instead of
    stopping at the text column: the machine grows with it, and the plate on
    its side keeps the same share of the width, so it stays in frame */
@@ -279,19 +279,14 @@ p{margin:0}
 /* the line runs wider than its column and off the right edge, so it reads big */
 .mach{position:relative;width:149%;margin-right:-49%}
 .mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
-.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
+/* one unbroken photograph, shown as it is: no overlay, no entrance, nothing
+   that can leave the main picture half-drawn */
 
 @media (prefers-reduced-motion:no-preference){
   /* parked under the machine until the block is on screen, otherwise on phones
      the profile finishes travelling before the visitor scrolls down to it */
-  .hero-img.armed .mach-rail{transform:translate(100%,-24%)}
-  .hero-img.armed.go .mach-rail{animation:railOut 2.4s cubic-bezier(.2,.75,.25,1) both}
-}
+  .hero-img.armed   .hero-img.armed.go }
 /* travels left and slightly down, following the tilt of the profile itself */
-@keyframes railOut{
-  from{transform:translate(100%,-24%)}
-  to{transform:translate(0,0)}
-}
 
 /* ---------- typing effect on the facts strip ---------- */
 .tw-cursor::after{
@@ -868,7 +863,6 @@ window.addEventListener('pageshow', function(e){
     <div class="hero-img rv">
       <div class="mach">
         <img class="mach-body" src="assets/mach_body.webp" alt="Профилегибочная линия ТД Флагман" fetchpriority="high">
-        <img class="mach-rail" src="assets/mach_rail.webp" alt="Профиль на выходе из линии">
       </div>
     </div>
   </div>
