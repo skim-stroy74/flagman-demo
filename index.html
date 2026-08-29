@@ -278,7 +278,20 @@ p{margin:0}
    the rail is a separate cut-out so it can travel along its own axis. */
 /* the line runs wider than its column and off the right edge, so it reads big */
 .mach{position:relative;width:149%;margin-right:-49%}
+.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
 .mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
+/* The section travels along its own axis: sliding 100% of its width to the
+   right also lifts it 23% of its height, which is the slope measured off the
+   photograph. Any other pairing and it drifts off the line mid-flight.
+   No parked state and no fill: if the animation never runs, the profile is
+   simply where the photograph had it. */
+@media(prefers-reduced-motion:no-preference){
+  .hero-img.armed.go .mach-rail{animation:railOut 2.2s cubic-bezier(.22,.72,.24,1)}
+}
+@keyframes railOut{
+  from{transform:translate(100%,-23%)}
+  to{transform:none}
+}
 /* ---------- the line looks like it is running ------------------------
    Sparks fall from the cutting head and a soft sheen travels along the
    section that is leaving the machine. Both float above the photograph, so
@@ -888,6 +901,7 @@ window.addEventListener('pageshow', function(e){
     </div>
     <div class="hero-img rv">
       <div class="mach">
+        <img class="mach-rail" src="assets/mach_rail.webp" alt="Профиль на выходе из линии" fetchpriority="high">
         <img class="mach-body" src="assets/mach_body.webp" alt="Профилегибочная линия ТД Флагман" fetchpriority="high">
       <div class="mach-fx" aria-hidden="true">
     <i class="spark" style="--x:28.0%;--y:70.0%;--d:0.00s;--s:0.70"></i>
@@ -2436,9 +2450,13 @@ window.addEventListener('pageshow', function(e){
     box.classList.remove('go');
     void box.offsetWidth;      // force reflow so the animation restarts
     box.classList.add('go');
+    settle();
   });
   var done = false;
-  var start = function(){ if (done) return; done = true; box.classList.add('go'); };
+  // the class is dropped again once the slide has had its time: a stalled or
+  // throttled animation must never leave the profile parked out of frame
+  var settle = function(){ setTimeout(function(){ box.classList.remove('go'); }, 2600); };
+  var start = function(){ if (done) return; done = true; box.classList.add('go'); settle(); };
 
   // if it is already on screen at load, go straight away
   var r = box.getBoundingClientRect();
