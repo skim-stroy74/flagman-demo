@@ -259,65 +259,29 @@ p{margin:0}
 /* clipping lives on the section so the profile can travel in from the page corner,
    not from the edge of its own column - and the page still never scrolls sideways */
 .hero{padding:clamp(40px,6vw,72px) 0 clamp(36px,5vw,60px);overflow:hidden}
-.hero-in{display:grid;grid-template-columns:minmax(0,0.72fr) minmax(0,1.48fr);gap:clamp(20px,3.6vw,52px);align-items:center}
+.hero-in{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:clamp(28px,5vw,60px);align-items:center}
 .hero h1{font-size:clamp(28px,3.5vw,42px)}
 .hero-sub{margin-top:20px;font-size:clamp(16.5px,1.5vw,19px);color:var(--ink-2);max-width:36ch}
 .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
 /* cut-out profile sits straight on the page, no plate behind it.
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
-.hero-img{position:relative;padding:8px 0;min-width:0}
-/* on wide screens the picture runs to the edge of the window instead of
-   stopping at the text column: the machine grows with it, and the plate on
-   its side keeps the same share of the width, so it stays in frame */
-@media(min-width:1241px){
-  .hero-img{margin-right:calc(-1 * ((100vw - 1240px) / 2 + var(--pad)))}
+.hero-img{position:relative;overflow:hidden;padding:8px 0;min-width:0}
+.hero-img img{width:100%;height:auto;display:block}
+/* the section arrives from off to the right; the rest position is the finished
+   one, so nothing is hidden if the animation never gets to run */
+@media(prefers-reduced-motion:no-preference){
+  .hero-img.armed.go img{animation:profileOut 1.25s cubic-bezier(.18,.9,.28,1)}
+}
+@keyframes profileOut{
+  from{transform:translate(46%,-26%)}
+  to{transform:none}
 }
 
 /* the roll-forming line, with the finished profile fed out from under it.
    the rail is a separate cut-out so it can travel along its own axis. */
 /* the line runs wider than its column and off the right edge, so it reads big */
 .mach{position:relative;width:149%;margin-right:-49%}
-.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
-.mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
-/* The section travels along its own axis: sliding 100% of its width to the
-   right also lifts it 23% of its height, which is the slope measured off the
-   photograph. Any other pairing and it drifts off the line mid-flight.
-   No parked state and no fill: if the animation never runs, the profile is
-   simply where the photograph had it. */
-@media(prefers-reduced-motion:no-preference){
-  .hero-img.armed.go .mach-rail{animation:railOut 2.2s cubic-bezier(.22,.72,.24,1)}
-}
-@keyframes railOut{
-  from{transform:translate(100%,-23%)}
-  to{transform:none}
-}
-/* ---------- the line looks like it is running ------------------------
-   Sparks fall from the cutting head and a soft sheen travels along the
-   section that is leaving the machine. Both float above the photograph, so
-   nothing has to line up with its perspective.
-   -------------------------------------------------------------------- */
-.mach-fx{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
-.spark{position:absolute;left:var(--x);top:var(--y);width:3px;height:3px;border-radius:50%;
-  background:#ffd9a3;opacity:0;transform:scale(var(--s));
-  box-shadow:0 0 6px 1px rgba(255,196,120,.75)}
-.sheen{position:absolute;left:-30%;top:46%;width:26%;height:12%;opacity:0;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
-  filter:blur(6px);transform:rotate(-9deg)}
-@media(prefers-reduced-motion:no-preference){
-  .spark{animation:sparkFall 2.6s ease-in infinite;animation-delay:var(--d)}
-  .sheen{animation:sheenRun 7s ease-in-out infinite}
-}
-@keyframes sparkFall{
-  0%{opacity:0;transform:translate(0,0) scale(var(--s))}
-  12%{opacity:.95}
-  100%{opacity:0;transform:translate(-26px,54px) scale(calc(var(--s) * .5))}
-}
-@keyframes sheenRun{
-  0%,68%{opacity:0;transform:translateX(0) rotate(-9deg)}
-  74%{opacity:.5}
-  100%{opacity:0;transform:translateX(190%) rotate(-9deg)}
-}
 /* one unbroken photograph, shown as it is: no overlay, no entrance, nothing
    that can leave the main picture half-drawn */
 
@@ -900,20 +864,7 @@ window.addEventListener('pageshow', function(e){
       </div>
     </div>
     <div class="hero-img rv">
-      <div class="mach">
-        <img class="mach-rail" src="assets/mach_rail.webp" alt="Профиль на выходе из линии" fetchpriority="high">
-        <img class="mach-body" src="assets/mach_body.webp" alt="Профилегибочная линия ТД Флагман" fetchpriority="high">
-      <div class="mach-fx" aria-hidden="true">
-    <i class="spark" style="--x:28.0%;--y:70.0%;--d:0.00s;--s:0.70"></i>
-    <i class="spark" style="--x:29.6%;--y:71.4%;--d:0.42s;--s:0.95"></i>
-    <i class="spark" style="--x:31.2%;--y:72.8%;--d:0.84s;--s:1.20"></i>
-    <i class="spark" style="--x:32.8%;--y:70.0%;--d:1.26s;--s:0.70"></i>
-    <i class="spark" style="--x:28.0%;--y:71.4%;--d:1.68s;--s:0.95"></i>
-    <i class="spark" style="--x:29.6%;--y:72.8%;--d:2.10s;--s:1.20"></i>
-    <i class="spark" style="--x:31.2%;--y:70.0%;--d:2.52s;--s:0.70"></i>
-        <i class="sheen"></i>
-      </div>
-      </div>
+      <img src="assets/hero_profil.webp" alt="Профиль для гипсокартона производства ТД Флагман" fetchpriority="high">
     </div>
   </div>
 </section>
