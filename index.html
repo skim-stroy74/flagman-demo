@@ -259,7 +259,7 @@ p{margin:0}
 /* clipping lives on the section so the profile can travel in from the page corner,
    not from the edge of its own column - and the page still never scrolls sideways */
 .hero{padding:clamp(40px,6vw,72px) 0 clamp(36px,5vw,60px);overflow:hidden}
-.hero-in{display:grid;grid-template-columns:minmax(0,0.75fr) minmax(0,1.45fr);gap:clamp(20px,3.4vw,48px);align-items:center}
+.hero-in{display:grid;grid-template-columns:minmax(0,0.72fr) minmax(0,1.48fr);gap:clamp(20px,3.6vw,52px);align-items:center}
 .hero h1{font-size:clamp(28px,3.5vw,42px)}
 .hero-sub{margin-top:20px;font-size:clamp(16.5px,1.5vw,19px);color:var(--ink-2);max-width:36ch}
 .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
@@ -267,11 +267,17 @@ p{margin:0}
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
 .hero-img{position:relative;padding:8px 0;min-width:0;cursor:pointer}
+/* on wide screens the picture runs to the edge of the window instead of
+   stopping at the text column: the machine grows with it, and the plate on
+   its side keeps the same share of the width, so it stays in frame */
+@media(min-width:1241px){
+  .hero-img{margin-right:calc(-1 * ((100vw - 1240px) / 2 + var(--pad)))}
+}
 
 /* the roll-forming line, with the finished profile fed out from under it.
    the rail is a separate cut-out so it can travel along its own axis. */
 /* the line runs wider than its column and off the right edge, so it reads big */
-.mach{position:relative;width:148%;margin-right:-48%}
+.mach{position:relative;width:149%;margin-right:-49%}
 .mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
 .mach-rail{position:absolute;z-index:1;left:-3.61%;top:49.62%;width:15.15%;height:auto;display:block}
 
@@ -790,6 +796,9 @@ body.cart-open .fab-menu{display:none!important}
 }
 @media(max-width:392px){.brand-t span{display:none}}
 @media(max-width:344px){.brand-t{display:none}}
+/* wide screens: the picture runs to the window edge and the machine grows with
+   it, so the emerging profile has to tuck in or it reaches the headline */
+@media(min-width:1241px){.mach-rail{left:-2.1%}}
 </style>
 <script>
 /* runs before anything is drawn: the theme must be settled before the first
@@ -853,7 +862,7 @@ window.addEventListener('pageshow', function(e){
   <div class="wrap hero-in">
     <div>
       <h1>Производство профиля и крепежа для гипсокартона</h1>
-      <p class="hero-sub">Свой цех в Магнитогорске. Отгружаем любыми партиями.</p>
+      <p class="hero-sub">Собственное производство в Магнитогорске. Отгружаем любыми партиями.</p>
       <div class="hero-cta">
         <a class="btn btn-p" href="#catalog">Смотреть каталог<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></a>
         <a class="btn btn-s" href="#request">Запросить прайс</a>
@@ -870,7 +879,7 @@ window.addEventListener('pageshow', function(e){
 
 <section class="facts">
   <div class="wrap facts-in">
-    <div class="fact"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M116,176a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h28A8,8,0,0,1,116,176Zm60-8H148a8,8,0,0,0,0,16h28a8,8,0,0,0,0-16Zm64,48a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16h8V88a8,8,0,0,1,12.8-6.4L96,120V88a8,8,0,0,1,12.8-6.4l38.74,29.05L159.1,29.74A16.08,16.08,0,0,1,174.94,16h18.12A16.08,16.08,0,0,1,208.9,29.74l15,105.13s.08.78.08,1.13v72h8A8,8,0,0,1,240,216Zm-77.86-94.4,8.53,6.4h36.11L193.06,32H174.94ZM48,208H208V144H168a8,8,0,0,1-4.8-1.6l-14.4-10.8,0,0L112,104v32a8,8,0,0,1-12.8,6.4L48,104Z"/></svg><b data-type="Своё производство">Своё производство</b><p data-type="Делаем сами, поэтому в цене нет наценки посредников.">Делаем сами, поэтому в цене нет наценки посредников.</p></div>
+    <div class="fact"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M116,176a8,8,0,0,1-8,8H80a8,8,0,0,1,0-16h28A8,8,0,0,1,116,176Zm60-8H148a8,8,0,0,0,0,16h28a8,8,0,0,0,0-16Zm64,48a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16h8V88a8,8,0,0,1,12.8-6.4L96,120V88a8,8,0,0,1,12.8-6.4l38.74,29.05L159.1,29.74A16.08,16.08,0,0,1,174.94,16h18.12A16.08,16.08,0,0,1,208.9,29.74l15,105.13s.08.78.08,1.13v72h8A8,8,0,0,1,240,216Zm-77.86-94.4,8.53,6.4h36.11L193.06,32H174.94ZM48,208H208V144H168a8,8,0,0,1-4.8-1.6l-14.4-10.8,0,0L112,104v32a8,8,0,0,1-12.8,6.4L48,104Z"/></svg><b data-type="Собственное производство">Собственное производство</b><p data-type="Полный цикл: от рулона проката до готовой пачки профиля.">Полный цикл: от рулона проката до готовой пачки профиля.</p></div>
     <div class="fact"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"/></svg><b data-type="Склад в Магнитогорске">Склад в Магнитогорске</b><p data-type="Ходовые позиции есть в наличии, отгрузка в день обращения.">Ходовые позиции есть в наличии, отгрузка в день обращения.</p></div>
   </div>
 </section>
@@ -1842,20 +1851,20 @@ window.addEventListener('pageshow', function(e){
         <p>Минимума нет. Отгружаем и одну пачку профиля, и фуру. Цена зависит от объёма, при регулярных отгрузках закрепляем за вами отдельный прайс.</p>
       </div>
       <div class="faq-i">
-        <h3>Можно забрать сегодня?</h3>
-        <p>По позициям, которые есть на складе, отгружаем в день обращения. Наличие уточняйте по телефону: остатки меняются ежедневно.</p>
+        <h3>Есть ли наличие на складе?</h3>
+        <p>Да, есть постоянные складские запасы. Наличие уточняйте по телефону.</p>
       </div>
       <div class="faq-i">
-        <h3>Возите в другие города?</h3>
-        <p>По Магнитогорску и Челябинской области доставляем своим транспортом. В соседние регионы возим своим собственным транспортом, условия обсуждаем при заказе.</p>
+        <h3>Есть доставка в другие города?</h3>
+        <p>Да, рассчитывается индивидуально.</p>
       </div>
       <div class="faq-i">
         <h3>Делаете нестандартные размеры?</h3>
         <p>Да, это одно из преимуществ собственного производства. Сроки обсуждаем при заказе.</p>
       </div>
       <div class="faq-i">
-        <h3>Из какого металла производите?</h3>
-        <p>Работаем на оцинкованной стали Магнитогорского металлургического комбината. Толщину подбираем под задачу: от 0,4 мм для потолков до 0,6 мм для нагруженных перегородок.</p>
+        <h3>Какое сырьё используете в производстве?</h3>
+        <p>В производстве используется только качественный оцинкованный прокат производства Магнитогорского металлургического комбината.</p>
       </div>
     </div>
   </div>
