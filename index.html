@@ -266,22 +266,24 @@ p{margin:0}
 /* cut-out profile sits straight on the page, no plate behind it.
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
-.hero-img{position:relative;overflow:hidden;padding:8px 0;min-width:0}
-.hero-img img{width:100%;height:auto;display:block}
-/* the section arrives from off to the right; the rest position is the finished
-   one, so nothing is hidden if the animation never gets to run */
+.hero-img{position:relative;padding:8px 0;min-width:0;cursor:pointer}
+.mach{position:relative;width:100%}
+.mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
+.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
+/* the section travels along its own axis: a full width to the right also lifts
+   it 24% of its height, which is the slope of the profile in the photograph.
+   No parked state and no fill, so the picture is whole whatever happens. */
 @media(prefers-reduced-motion:no-preference){
-  .hero-img.armed.go img{animation:profileOut 1.25s cubic-bezier(.18,.9,.28,1)}
+  .hero-img.armed.go .mach-rail{animation:railOut 2.4s cubic-bezier(.2,.75,.25,1)}
 }
-@keyframes profileOut{
-  from{transform:translate(46%,-26%)}
+@keyframes railOut{
+  from{transform:translate(100%,-24%)}
   to{transform:none}
 }
 
 /* the roll-forming line, with the finished profile fed out from under it.
    the rail is a separate cut-out so it can travel along its own axis. */
 /* the line runs wider than its column and off the right edge, so it reads big */
-.mach{position:relative;width:149%;margin-right:-49%}
 /* one unbroken photograph, shown as it is: no overlay, no entrance, nothing
    that can leave the main picture half-drawn */
 
@@ -691,7 +693,6 @@ body.cart-open .fab-menu{display:none!important}
   .hero-in,.ct,.terms,.offer,.calc{grid-template-columns:minmax(0,1fr)}
   /* on phones the profile leads: it is the first thing in view */
   .hero-img{order:-1;margin-bottom:8px}
-  .mach{width:112%;margin-right:-12%}
   /* on phones the profile leads: it is the first thing on screen, then the pitch */
   .hero-img{order:-1;margin-bottom:6px}
   .hero-sub{max-width:none}
@@ -864,7 +865,10 @@ window.addEventListener('pageshow', function(e){
       </div>
     </div>
     <div class="hero-img rv">
-      <img src="assets/hero_profil.webp" alt="Профиль для гипсокартона производства ТД Флагман" fetchpriority="high">
+      <div class="mach">
+        <img class="mach-body" src="assets/mach_body.webp" alt="Профилегибочная линия ТД Флагман" fetchpriority="high">
+        <img class="mach-rail" src="assets/mach_rail.webp" alt="Профиль на выходе из линии">
+      </div>
     </div>
   </div>
 </section>
