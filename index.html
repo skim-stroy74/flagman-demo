@@ -795,6 +795,27 @@ body.cart-open .fab-menu{display:none!important}
 }
 @media(max-width:392px){.brand-t span{display:none}}
 @media(max-width:344px){.brand-t{display:none}}
+/* ---------- уведомление о cookie ------------------------------------
+   Bottom edge is crowded: the call bar and the basket are already fixed
+   there. While the notice is up it reports its own height and the other
+   two ride above it, so nothing is ever buried.
+   -------------------------------------------------------------------- */
+.ck{position:fixed;left:0;right:0;bottom:0;z-index:75;display:none;
+  background:var(--bg-2);border-top:1px solid var(--line);
+  box-shadow:0 -12px 32px rgba(6,10,16,.34);
+  padding:14px var(--pad) calc(14px + env(safe-area-inset-bottom))}
+.ck.on{display:block}
+.ck-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;
+  gap:clamp(14px,2.4vw,30px);flex-wrap:wrap}
+.ck-t{flex:1 1 340px;min-width:0;margin:0;font-size:14.5px;line-height:1.55;color:var(--ink-2)}
+.ck-t a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.ck .btn{flex-shrink:0;padding:11px 26px;font-size:15px}
+body.ck-on .mbar,body.ck-on .cart{bottom:var(--ck-h,0px)}
+@media (max-width:620px){
+  .ck{padding-top:13px}
+  .ck-t{flex-basis:100%;font-size:14px}
+  .ck .btn{width:100%}
+}
 </style>
 <script>
 /* runs before anything is drawn: the theme must be settled before the first
@@ -1924,10 +1945,19 @@ window.addEventListener('pageshow', function(e){
   <a class="btn btn-s" href="#request">Запросить прайс</a>
 </div>
 
+<div class="ck" id="cookie-bar" role="region" aria-label="Уведомление об использовании cookie">
+  <div class="ck-in">
+    <p class="ck-t">Сайт использует cookie и похожие технологии — чтобы страницы работали
+      корректно, запоминалась выбранная тема и открывались карта проезда и видео
+      с производства. Подробнее — в <a href="#policy" data-open-modal>политике
+      обработки персональных данных</a>.</p>
+    <button class="btn btn-p" type="button" data-ck-ok>Хорошо</button>
+  </div>
+</div>
 <div class="modal" id="policy" role="dialog" aria-modal="true" aria-labelledby="policy-t">
   <div class="modal-in">
     <h2 id="policy-t">Политика обработки персональных данных</h2>
-    <p class="modal-date">ООО «ТД Флагман», ИНН 7456050032. Редакция от 12 августа 2026 года.</p>
+    <p class="modal-date">ООО «ТД Флагман», ИНН 7456050032. Редакция от 8 сентября 2026 года.</p>
 
     <h3>1. Общие положения</h3>
     <p>Политика описывает, как ООО «ТД Флагман» (далее — Оператор) обрабатывает персональные данные посетителей сайта магкрепеж.рф, и составлена в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных».</p>
@@ -1942,7 +1972,7 @@ window.addEventListener('pageshow', function(e){
     <p>Дополнительно средствами сервисов интернет-статистики собираются обезличенные технические данные: сведения о браузере и устройстве, источник перехода, просмотренные страницы.</p>
 
     <h3>3. Зачем они нужны</h3>
-    <p>Данные используются исключительно для того, чтобы связаться с посетителем по его обращению: ответить на вопрос, направить прайс-лист, согласовать условия поставки. Оператор не использует их для рассылок, не передаёт третьим лицам и не продаёт.</p>
+    <p>Данные используются исключительно для того, чтобы связаться с посетителем по его обращению: ответить на вопрос, направить прайс-лист, согласовать условия поставки. Оператор не использует их для рассылок и не продаёт. Заявка с сайта доставляется на электронную почту Оператора через сервис отправки форм; иным третьим лицам данные не передаются.</p>
 
     <h3>4. Правовое основание</h3>
     <p>Обработка ведётся на основании согласия, которое посетитель даёт, отмечая соответствующий пункт при отправке формы.</p>
@@ -1950,10 +1980,22 @@ window.addEventListener('pageshow', function(e){
     <h3>5. Сроки и защита</h3>
     <p>Данные хранятся не дольше, чем требуется для обработки обращения и последующего взаимодействия, но не более трёх лет с момента последнего контакта. Оператор принимает необходимые правовые, организационные и технические меры для защиты данных от неправомерного доступа, уничтожения, изменения и распространения.</p>
 
-    <h3>6. Права посетителя</h3>
+    <h3>6. Файлы cookie и похожие технологии</h3>
+    <p>Сайт не использует рекламные и отслеживающие cookie. В браузере посетителя сохраняются:</p>
+    <ul>
+      <li>выбранная тема оформления — хранится локально в браузере и никуда не передаётся;</li>
+      <li>отметка о том, что это уведомление закрыто, — чтобы не показывать его снова;</li>
+      <li>служебные файлы Яндекса — при загрузке виджета карты в разделе «Контакты»;</li>
+      <li>служебные файлы RuTube — при запуске видео в разделе «Производство».</li>
+    </ul>
+    <p>Последние два вида устанавливают сами сервисы по своим правилам, и до того, как
+    посетитель дойдёт до этих разделов, они не появляются. Отключить или удалить cookie
+    можно в настройках браузера: сайт продолжит работать, но карта и видео могут не
+    загрузиться, а тема оформления сбросится при следующем визите.</p>
+    <h3>7. Права посетителя</h3>
     <p>Посетитель вправе в любой момент отозвать согласие, запросить сведения об обработке своих данных, потребовать их уточнения, блокирования или удаления. Для этого достаточно написать на kompleks-mgn@mail.ru или позвонить по телефону, указанному на сайте.</p>
 
-    <h3>7. Контакты Оператора</h3>
+    <h3>8. Контакты Оператора</h3>
     <p>ООО «ТД Флагман», ОГРН 1227400007097.<br>
     Электронная почта: kompleks-mgn@mail.ru<br>
     Телефон: +7 (968) 116-37-21</p>
@@ -2341,6 +2383,45 @@ window.addEventListener('pageshow', function(e){
   document.querySelectorAll('[data-close-modal]').forEach(function(b){ b.addEventListener('click', close); });
   modal.addEventListener('click', function(e){ if (e.target === modal) close(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+})();
+
+// уведомление о cookie: показывается один раз, ответ помнится
+(function(){
+  var bar = document.getElementById('cookie-bar');
+  if (!bar) return;
+  var KEY = 'flagman-cookie';
+
+  // объявляем ответ наружу: счётчика на сайте пока нет, но когда появится,
+  // он сможет дождаться этого события вместо запуска при загрузке
+  var announce = function(ok){
+    window.flagmanCookieOk = ok;
+    try { document.dispatchEvent(new CustomEvent('flagman:cookie', { detail: { ok: ok } })); } catch (e) {}
+  };
+
+  // приватное окно или запрет на хранилище: обращение к localStorage там
+  // бросает исключение, поэтому проверяем не наличие объекта, а сам доступ
+  var stored = null, canStore = true;
+  try { stored = localStorage.getItem(KEY); } catch (e) { canStore = false; }
+  // без хранилища полоса появлялась бы на каждой странице — лучше промолчать
+  if (stored || !canStore) { announce(!!stored); return; }
+
+  var lift = function(){
+    document.documentElement.style.setProperty('--ck-h', bar.offsetHeight + 'px');
+  };
+  bar.classList.add('on');
+  document.body.classList.add('ck-on');
+  lift();
+  window.addEventListener('resize', lift);
+
+  bar.querySelector('[data-ck-ok]').addEventListener('click', function(){
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ v: 1, ok: true, at: new Date().toISOString() }));
+    } catch (e) {}
+    bar.classList.remove('on');
+    document.body.classList.remove('ck-on');
+    window.removeEventListener('resize', lift);
+    announce(true);
+  });
 })();
 
 // type the three selling points out line by line when the strip scrolls into view
