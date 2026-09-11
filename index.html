@@ -280,39 +280,27 @@ p{margin:0}
 /* clipping lives on the section so the profile can travel in from the page corner,
    not from the edge of its own column - and the page still never scrolls sideways */
 .hero{padding:clamp(40px,6vw,72px) 0 clamp(36px,5vw,60px);overflow:hidden}
-.hero-in{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.25fr);gap:clamp(24px,4vw,52px);align-items:center}
+.hero-in{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:clamp(28px,5vw,60px);align-items:center}
 .hero h1{font-size:clamp(28px,3.5vw,42px)}
 .hero-sub{margin-top:20px;font-size:clamp(16.5px,1.5vw,19px);color:var(--ink-2);max-width:36ch}
 .hero-cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
 /* cut-out profile sits straight on the page, no plate behind it.
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
-.hero-img{position:relative;padding:8px 0;min-width:0;cursor:pointer}
-.mach{position:relative;width:118%;margin-right:-18%}
-.mach-body{position:relative;z-index:2;width:100%;height:auto;display:block}
-.mach-rail{position:absolute;z-index:1;left:0;top:49.62%;width:11.54%;height:auto;display:block}
+.hero-img{position:relative;overflow:hidden;padding:8px 0;min-width:0;cursor:pointer}
+.hero-img img{width:100%;height:auto;display:block}
 /* the section travels along its own axis: a full width to the right also lifts
    it 24% of its height, which is the slope of the profile in the photograph.
    No parked state and no fill, so the picture is whole whatever happens. */
 @media(prefers-reduced-motion:no-preference){
-  .hero-img.armed.go .mach-rail{animation:railOut 2.4s cubic-bezier(.2,.75,.25,1)}
+  .hero-img.armed.go img{animation:profileOut 1.5s cubic-bezier(.18,.9,.28,1)}
 }
-@keyframes railOut{
-  from{transform:translate(100%,-24%)}
+@keyframes profileOut{
+  from{transform:translate(70%,-51%)}
   to{transform:none}
 }
 
-/* the roll-forming line, with the finished profile fed out from under it.
-   the rail is a separate cut-out so it can travel along its own axis. */
-/* the line runs wider than its column and off the right edge, so it reads big */
-/* one unbroken photograph, shown as it is: no overlay, no entrance, nothing
-   that can leave the main picture half-drawn */
 
-@media (prefers-reduced-motion:no-preference){
-  /* parked under the machine until the block is on screen, otherwise on phones
-     the profile finishes travelling before the visitor scrolls down to it */
-  .hero-img.armed   .hero-img.armed.go }
-/* travels left and slightly down, following the tilt of the profile itself */
 
 /* ---------- typing effect on the facts strip ---------- */
 .tw-cursor::after{
@@ -907,10 +895,7 @@ window.addEventListener('pageshow', function(e){
       </div>
     </div>
     <div class="hero-img rv">
-      <div class="mach">
-        <img class="mach-body" src="assets/mach_body.webp" alt="Профилегибочная линия ТД Флагман" fetchpriority="high">
-        <img class="mach-rail" src="assets/mach_rail.webp" alt="Профиль на выходе из линии">
-      </div>
+      <img src="assets/hero_profil.webp" alt="Профиль для гипсокартона производства ТД Флагман" fetchpriority="high">
     </div>
   </div>
 </section>
