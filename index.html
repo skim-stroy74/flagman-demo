@@ -287,16 +287,16 @@ p{margin:0}
 /* cut-out profile sits straight on the page, no plate behind it.
    min-width:0 matters: without it the grid column grows to the image's own
    pixel width on narrow screens and the whole page scrolls sideways. */
-.hero-img{position:relative;overflow:hidden;padding:8px 0;min-width:0;cursor:pointer}
+.hero-img{position:relative;padding:8px 0;min-width:0;cursor:pointer}
 .hero-img img{width:100%;height:auto;display:block}
 /* the section travels along its own axis: a full width to the right also lifts
    it 24% of its height, which is the slope of the profile in the photograph.
    No parked state and no fill, so the picture is whole whatever happens. */
 @media(prefers-reduced-motion:no-preference){
-  .hero-img.armed.go img{animation:profileOut 1.5s cubic-bezier(.18,.9,.28,1)}
+  .hero-img.armed.go img{animation:profileOut 1.6s cubic-bezier(.16,.84,.3,1)}
 }
 @keyframes profileOut{
-  from{transform:translate(70%,-51%)}
+  from{transform:translateX(100vw)}
   to{transform:none}
 }
 
