@@ -293,10 +293,10 @@ p{margin:0}
    it 24% of its height, which is the slope of the profile in the photograph.
    No parked state and no fill, so the picture is whole whatever happens. */
 @media(prefers-reduced-motion:no-preference){
-  .hero-img.armed.go img{animation:profileOut 1.6s cubic-bezier(.16,.84,.3,1)}
+  .hero-img.armed.go img{animation:profileOut 2s cubic-bezier(.25,.46,.45,1)}
 }
 @keyframes profileOut{
-  from{transform:translateX(100vw)}
+  from{transform:translateX(var(--hero-slide,100vw))}
   to{transform:none}
 }
 
@@ -2485,6 +2485,20 @@ window.addEventListener('pageshow', function(e){
   var box = document.querySelector('.hero-img');
   if (!box) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // ход: ровно от правого края экрана до места, где картинка стоит в покое.
+  // В CSS это не вычислить - зависит от того, куда её поставила раскладка.
+  var img = box.querySelector('img');
+  var measure = function(){
+    // во время хода позиция сдвинута, и замер дал бы ерунду
+    if (!img || box.classList.contains('go')) return;
+    var left = img.getBoundingClientRect().left;
+    var slide = Math.max(0, Math.round(window.innerWidth - left + 20));
+    document.documentElement.style.setProperty('--hero-slide', slide + 'px');
+  };
+  measure();
+  window.addEventListener('resize', measure);
+
   box.classList.add('armed');
 
   // tapping the profile replays the slide-in
