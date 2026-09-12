@@ -228,6 +228,10 @@ p{margin:0}
 [data-theme="soft"] .ft-nav a:hover{color:var(--ink)}
 [data-theme="soft"] .ft-bot{border-top-color:var(--line);color:var(--ink-3)}
 [data-theme="soft"] .ft-bot a{color:var(--ink-3)}
+[data-theme="soft"] .ft-dev{color:var(--ink-3)}
+[data-theme="soft"] .ft-dev a{color:var(--ink-3)}
+[data-theme="soft"] .ft-dev a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+[data-theme="soft"] .ft-dot{color:var(--line)}
 
 /* ---------- demo notice ---------- */
 .demo-bar{background:#16202c;border-bottom:1px solid #2b3648;color:#95a3b6;font-size:13.5px;line-height:1.45;padding:9px 0}
@@ -699,6 +703,12 @@ body.cart-open .fab-menu{display:none!important}
 .ft-nav a:hover{color:#fff}
 .ft-bot{margin-top:28px;padding-top:22px;border-top:1px solid #333a45;display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between;font-size:13.5px;color:#78818e}
 .ft-bot a{color:#9aa3af}
+/* подпись разработчика: на ступень мельче и глуше реквизитов заказчика —
+   её задача быть найденной, а не бросаться в глаза */
+.ft-dev{margin:16px 0 0;font-size:12.5px;line-height:1.8;color:#5d6672}
+.ft-dev a{color:#78818e;text-decoration:none;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+.ft-dev a:hover,.ft-dev a:focus-visible{color:#a8b1bd;border-bottom-color:#4a525e}
+.ft-dot{color:#464e59}
 
 /* ---------- reveal ---------- */
 .rv{opacity:0;transform:translateY(16px)}
@@ -768,6 +778,7 @@ body.cart-open .fab-menu{display:none!important}
   .ct-item a,.ct-item span{display:inline-block;padding:7px 0}
   .ft-nav a{padding:9px 0}
   .ft-bot a{display:inline-block;padding:7px 0}
+  .ft-dev a{display:inline-block;padding:6px 0}
 }
 @media (max-width:600px){
   body{font-size:16px}
@@ -2065,6 +2076,10 @@ window.addEventListener('pageshow', function(e){
       <span>© 2026 ООО «ТД Флагман». Профиль и крепёж для гипсокартона от производителя.</span>
       <a href="#policy" data-open-modal>Политика конфиденциальности</a>
     </div>
+    <p class="ft-dev">Разработка сайта — Чугунов Владислав<span class="ft-dot"> · </span>
+      <a href="tel:+79933128788">+7 (993) 312-87-88</a><span class="ft-dot"> · </span>
+      <a href="https://t.me/chugunov_vm" target="_blank" rel="noopener">Telegram</a><span class="ft-dot"> · </span>
+      <a href="https://vk.ru/chugunov_vm" target="_blank" rel="noopener">ВКонтакте</a></p>
   </div>
 </footer>
 
