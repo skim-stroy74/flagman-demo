@@ -2678,7 +2678,13 @@ ym(112644388, "init", {ssr:true, webvisor:true, clickmap:true, trackLinks:true, 
       headers: { 'Accept': 'application/json' }
     })
       .then(function(r){ return r.ok ? r.json().catch(function(){ return {}; }) : Promise.reject(r.status); })
-      .then(function(){ clearTimeout(guard); done(true); })
+      // сервис отвечает кодом 200 и на отказ — настоящий результат лежит
+      // в поле success. Без этой проверки посетителю показывали «заявка
+      // отправлена» там, где её отвергли, и он уходил ждать звонка
+      .then(function(d){
+        if (d && String(d.success) === 'false') return Promise.reject('rejected');
+        clearTimeout(guard); done(true);
+      })
       .catch(function(){ clearTimeout(guard); done(false); });
   });
 })();
