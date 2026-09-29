@@ -1941,7 +1941,7 @@ ym(112644388, "init", {ssr:true, webvisor:true, clickmap:true, trackLinks:true, 
 <section class="sec has-bg" id="contacts">
   <div class="sec-bg" aria-hidden="true"><i data-src="assets/sb_contacts.webp"></i></div>
   <div class="wrap ct">
-    <form class="form" id="request" method="POST" action="https://formsubmit.co/kompleks-mgn@mail.ru">
+    <form class="form" id="request" method="POST" action="https://functions.yandexcloud.net/d4er9t8dq937qfgil7dd">
       <h2>Запросить прайс</h2>
       <p>Оставьте контакты и напишите, что вас интересует. Пришлём прайс с ценами под ваш объём в течение рабочего дня.</p>
       <div class="fld">
@@ -1960,10 +1960,7 @@ ym(112644388, "init", {ssr:true, webvisor:true, clickmap:true, trackLinks:true, 
         <input type="checkbox" id="f-ok" name="Согласие на обработку данных" value="да" required>
         <span>Согласен на обработку персональных данных в соответствии с <a href="#policy" data-open-modal>политикой конфиденциальности</a>.</span>
       </label>
-      <!-- formsubmit settings: plain subject, no captcha screen, thank-you text -->
-      <input type="hidden" name="_subject" value="Заявка с сайта магкрепеж.рф">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+      <!-- приманка для ботов: люди это поле не видят и не заполняют -->
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <button class="btn btn-p" type="submit">Отправить запрос</button>
       <p class="form-note" hidden>Заявка отправлена. Перезвоним в течение рабочего дня.</p>
@@ -2632,9 +2629,9 @@ ym(112644388, "init", {ssr:true, webvisor:true, clickmap:true, trackLinks:true, 
   });
 })();
 
-// The form used to post straight to formsubmit, which threw the visitor onto
-// a third-party English thank-you page - it reads as a failure and people give
-// up there. Send it in the background instead and answer on our own page.
+// Заявка уходит в фоне на свою функцию в Яндекс Облаке, а ответ посетитель
+// видит на этой же странице. Прежний сервис отправки не открывался из сети
+// заказчика — значит и клиенты из Магнитогорска не смогли бы ничего отправить.
 (function(){
   var form = document.getElementById('request');
   if (!form || !window.fetch || !window.FormData) return;   // no JS: plain post still works
@@ -2645,7 +2642,7 @@ ym(112644388, "init", {ssr:true, webvisor:true, clickmap:true, trackLinks:true, 
   var busy = false;
 
   // one source of truth for the address: the form's own action
-  var endpoint = form.getAttribute('action').replace('formsubmit.co/', 'formsubmit.co/ajax/');
+  var endpoint = form.getAttribute('action');
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -2672,10 +2669,20 @@ ym(112644388, "init", {ssr:true, webvisor:true, clickmap:true, trackLinks:true, 
 
     var guard = setTimeout(function(){ done(false); }, 15000);
 
+    // читаем поля через FormData, а шлём JSON: так функции не приходится
+    // разбирать multipart, а имена полей остаются человеческими в разметке
+    var fd = new FormData(form);
+    var payload = {
+      name:   fd.get('Имя')     || '',
+      tel:    fd.get('Телефон') || '',
+      msg:    fd.get('Запрос')  || '',
+      _honey: fd.get('_honey')  || ''
+    };
+
     fetch(endpoint, {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
     })
       .then(function(r){ return r.ok ? r.json().catch(function(){ return {}; }) : Promise.reject(r.status); })
       // сервис отвечает кодом 200 и на отказ — настоящий результат лежит
